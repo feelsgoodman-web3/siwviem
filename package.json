@@ -1,0 +1,44 @@
+{
+  "name": "@feelsgoodman/siwveim",
+  "version": "1.0.0",
+  "description": "Sign-in with Veim",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.cts",
+  "files": [
+    "./dist"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "tsup src/index.ts",
+    "clean": "rm -rf node_modules && rm -rf dist",
+    "lint": "tsc --noEmit && eslint \"src/**/*.ts*\"",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@spruceid/siwe-parser": "^2.0.2",
+    "@stablelib/random": "^1.0.1",
+    "uri-js": "^4.4.1",
+    "valid-url": "^1.0.9"
+  },
+  "peerDependencies": {
+    "viem": "^1.4.2"
+  },
+  "peerDependenciesMeta": {
+    "viem": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2",
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6",
+    "viem": "^1.4.2",
+    "vitest": "^0.33.0"
+  }
+}
