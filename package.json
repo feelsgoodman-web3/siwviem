@@ -10,8 +10,11 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts",
+    "changeset:release": "pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm install --lockfile-only",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "lint": "tsc --noEmit && eslint \"src/**/*.ts*\"",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "lint:fix": "eslint \"src/**/*.ts*\" --fix",
     "test": "vitest"
   },
   "dependencies": {
@@ -20,16 +23,10 @@
     "uri-js": "^4.4.1",
     "valid-url": "^1.0.9"
   },
-  "peerDependencies": {
-    "viem": "^1.4.2"
-  },
-  "peerDependenciesMeta": {
-    "viem": {
-      "optional": false
-    }
-  },
   "devDependencies": {
-    "@types/node": "^15.12.2",
+    "@changesets/changelog-github": "0.4.6",
+    "@changesets/cli": "2.25.2",
+    "@types/node": "^20.4.5",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.15.0",
@@ -39,5 +36,13 @@
     "typescript": "^5.1.6",
     "viem": "^1.4.2",
     "vitest": "^0.33.0"
+  },
+  "peerDependencies": {
+    "viem": "^1.4.2"
+  },
+  "peerDependenciesMeta": {
+    "viem": {
+      "optional": false
+    }
   }
 }

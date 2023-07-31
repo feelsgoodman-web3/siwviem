@@ -1,19 +1,16 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
-const parsingPositive = require("../test/parsing_positive.json");
-const parsingNegative = require("../test/parsing_negative.json");
-const parsingNegativeObjects = require("../test/parsing_negative_objects.json");
-const verificationPositive = require("../test/verification_positive.json");
-const verificationNegative = require("../test/verification_negative.json");
-const EIP1271 = require("../test/eip1271.json");
+import parsingPositive from "../test/parsing_positive.json";
+import parsingNegative from "../test/parsing_negative.json";
+import parsingNegativeObjects from "../test/parsing_negative_objects.json";
+import verificationPositive from "../test/verification_positive.json";
+import verificationNegative from "../test/verification_negative.json";
 
 import { describe, test, expect } from "vitest";
 
 import { SiwViemMessage } from "./client";
 import { SiwViemErrorType } from "./types";
-import { createPublicClient, http } from "viem";
-import { mainnet } from "viem/chains";
 
 describe(`Message Generation`, () => {
   test.concurrent.each(Object.entries(parsingPositive))(
