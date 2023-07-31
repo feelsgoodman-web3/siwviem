@@ -8,7 +8,6 @@
   "files": [
     "./dist"
   ],
-  "private": true,
   "scripts": {
     "build": "tsup src/index.ts",
     "clean": "rm -rf node_modules && rm -rf dist",
