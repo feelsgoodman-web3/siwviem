@@ -13,12 +13,7 @@ import {
   VerifyParams,
   VerifyParamsKeys,
 } from "./types";
-import {
-  Address,
-  getAddress,
-  recoverMessageAddress,
-  verifyMessage,
-} from "viem";
+import { Address, getAddress, recoverMessageAddress } from "viem";
 import {
   checkContractWalletSignature,
   checkInvalidKeys,
