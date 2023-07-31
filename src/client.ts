@@ -170,13 +170,12 @@ export class SiwViemMessage {
 
       const EIP4361Message = this.prepareMessage();
 
-      const valid = await verifyMessage({
+      const recoveredAddress = await recoverMessageAddress({
         message: EIP4361Message,
         signature: params.signature,
-        address: this.address,
       });
 
-      if (valid) {
+      if (recoveredAddress === this.address) {
         return { success: true, data: this };
       } else {
         const isContractWalletSignatureValid =
@@ -189,11 +188,6 @@ export class SiwViemMessage {
         if (isContractWalletSignatureValid) {
           return { success: true, data: this };
         } else {
-          const recoveredAddress = await recoverMessageAddress({
-            message: EIP4361Message,
-            signature: params.signature,
-          });
-
           throw new SiwViemError(
             SiwViemErrorType.INVALID_SIGNATURE,
             recoveredAddress,
