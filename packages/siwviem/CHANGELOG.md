@@ -1,5 +1,11 @@
 # @feelsgoodman/siwviem
 
+## 1.2.0
+
+### Minor Changes
+
+- [#11](https://github.com/feelsgoodman-web3/siwveim/pull/11) [`ea55008`](https://github.com/feelsgoodman-web3/siwveim/commit/ea55008dea693b52f4fa19021199ccae7268cb5c) Thanks [@conwayconstar](https://github.com/conwayconstar)! - Made typescript types stricter
+
 ## 1.1.1
 
 ### Patch Changes
