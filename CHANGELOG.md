@@ -1,5 +1,11 @@
 # @feelsgoodman/siwviem
 
+## 1.1.1
+
+### Patch Changes
+
+- [#9](https://github.com/feelsgoodman-web3/siwveim/pull/9) [`7d923fd`](https://github.com/feelsgoodman-web3/siwveim/commit/7d923fdd5dfdf233a92bdc6728c732b15d7e0256) Thanks [@conwayconstar](https://github.com/conwayconstar)! - Reimplement verificationFallback
+
 ## 1.1.0
 
 ### Minor Changes
