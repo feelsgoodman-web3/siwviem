@@ -13,22 +13,13 @@ import {
   VerifyParams,
   VerifyParamsKeys,
 } from "./types";
-import {
-  Address,
-  bytesToHex,
-  Chain,
-  getAddress,
-  PublicClient,
-  recoverMessageAddress,
-  Transport,
-} from "viem";
+import { Address, bytesToHex, getAddress, recoverMessageAddress } from "viem";
 import {
   checkContractWalletSignature,
   checkInvalidKeys,
   generateNonce,
   isValidISO8601Date,
 } from "./utils";
-import { ByteArray, Hex } from "viem/src/types/misc";
 
 export class SiwViemMessage {
   /**RFC 4501 dns authority that is requesting the signing. */
@@ -171,7 +162,7 @@ export class SiwViemMessage {
       this.validateDomainBinding(params.domain);
       this.validateNonceBinding(params.nonce);
       this.validateMessageTime(params.time);
-      await this.validateSignature(params.signature, opts.publicClient);
+      await this.validateSignature(params, opts);
     } catch (error) {
       if (opts.suppressExceptions) {
         return { success: false, data: this, error: error };
@@ -295,17 +286,19 @@ export class SiwViemMessage {
 
   /**
    * Validates the provided signature against the message.
-   * @param signature The signature to be validated.
-   * @param publicClient The public client which may be used for additional validation.
+   * @param params Parameters to verify the integrity of the message, signature is required.
+   * @param opts Options to be used for verification.
    * @throws {SiwViemError} Throws an error if the signature is invalid or the recovered address doesn't match.
    */
   private async validateSignature(
-    signature: Hex | ByteArray,
-    publicClient?: PublicClient<Transport, Chain>
+    params: VerifyParams,
+    opts: VerifyOpts = { suppressExceptions: false }
   ): Promise<void> {
     const EIP4361Message = this.prepareMessage();
     const hexedSignature =
-      typeof signature === "string" ? signature : bytesToHex(signature);
+      typeof params.signature === "string"
+        ? params.signature
+        : bytesToHex(params.signature);
 
     const normalizedSignatureBuf = Buffer.alloc(65);
     normalizedSignatureBuf.write(hexedSignature.substring(2), "hex");
@@ -322,13 +315,49 @@ export class SiwViemMessage {
       return;
     }
 
-    const isValid =
-      publicClient &&
-      (await checkContractWalletSignature(
-        this,
-        normalizedSignature,
-        publicClient
-      ));
+    const EIP1271Promise = checkContractWalletSignature(
+      this,
+      normalizedSignature,
+      opts?.publicClient
+    )
+      .then(isValid => {
+        if (!isValid) {
+          return {
+            success: false,
+            data: this,
+            error: new SiwViemError(
+              SiwViemErrorType.INVALID_SIGNATURE,
+              recoveredAddress,
+              `Resolved address to be ${this.address}`
+            ),
+          };
+        }
+        return {
+          success: true,
+          data: this,
+        };
+      })
+      .catch(error => {
+        return {
+          success: false,
+          data: this,
+          error,
+        };
+      });
+
+    const isValid = await Promise.all([
+      EIP1271Promise,
+      opts
+        ?.verificationFallback?.(params, opts, this, EIP1271Promise)
+        ?.then(res => res)
+        ?.catch((res: SiwViemResponse) => res),
+    ]).then(([EIP1271Response, fallbackResponse]) => {
+      if (fallbackResponse) {
+        return fallbackResponse.success;
+      } else {
+        return EIP1271Response.success;
+      }
+    });
 
     if (!isValid) {
       throw new SiwViemError(
