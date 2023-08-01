@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "exports": {
     "./base.json": "./base.json",
-    "./cjs.json": "./esm.json",
+    "./cjs.json": "./cjs.json",
     "./react-library.json": "./react-library.json"
   },
   "files": [

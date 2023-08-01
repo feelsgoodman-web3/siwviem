@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": [
+        "dist/**/*"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "clean": {
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "lint:fix": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "deploy:anvil": {
+      "dependsOn": ["^build"],
+      "outputs": ["cache/**/*"]
+    },
+    "test": {
+      "dependsOn": ["build", "deploy:anvil"],
+      "outputs": ["coverage/**/*"],
+      "env": []
+    }
+  }
+}

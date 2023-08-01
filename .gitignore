@@ -74,7 +74,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+packages/siwviem/.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -133,3 +133,5 @@ dist
 # Idea
 .idea
 *.tgz
+cache
+.turbo
