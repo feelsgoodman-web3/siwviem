@@ -1,5 +1,5 @@
 {
-  "extends": "typescript-config/cjs.json",
+  "extends": "@feelsgoodman/typescript-config/cjs.json",
   "compilerOptions": {
     "outDir": "./dist"
   },
