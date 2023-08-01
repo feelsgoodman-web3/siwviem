@@ -76,3 +76,7 @@ jobs:
           max_attempts: 3
           command: pnpm test
 
+      # Need to shutdown Anvil so cache gets created
+      - name: Shutdown Anvil
+        run: pkill -2 anvil
+
