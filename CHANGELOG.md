@@ -1,5 +1,11 @@
 # @feelsgoodman/siwviem
 
+## 1.1.0
+
+### Minor Changes
+
+- [#7](https://github.com/feelsgoodman-web3/siwveim/pull/7) [`ee05443`](https://github.com/feelsgoodman-web3/siwveim/commit/ee05443c8c7a033bf04841bb2b2cbd5cda26efa2) Thanks [@conwayconstar](https://github.com/conwayconstar)! - Refactor verify, normalise signature before checking
+
 ## 1.0.2
 
 ### Patch Changes
