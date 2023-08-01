@@ -6,27 +6,14 @@ import { ByteArray, Hex } from "viem/src/types/misc";
 
 const EIP1271_ABI = [
   {
-    constant: true,
-    inputs: [
-      {
-        name: "_messageHash",
-        type: "bytes",
-      },
-      {
-        name: "_signature",
-        type: "bytes",
-      },
-    ],
-    name: "isValidSignature",
-    outputs: [
-      {
-        name: "magicValue",
-        type: "bytes4",
-      },
-    ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    inputs: [
+      { name: "_hash", internalType: "bytes32", type: "bytes32" },
+      { name: "_signature", internalType: "bytes", type: "bytes" },
+    ],
+    name: "isValidSignature",
+    outputs: [{ name: "magicValue", internalType: "bytes4", type: "bytes4" }],
   },
 ];
 const EIP1271_MAGICVALUE = "0x1626ba7e";

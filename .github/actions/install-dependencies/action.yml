@@ -13,6 +13,9 @@ runs:
         cache: pnpm
         node-version: 18
 
+    - name: Set up foundry
+      uses: foundry-rs/foundry-toolchain@v1
+
     - name: Install dependencies
       shell: bash
       run: pnpm install --ignore-scripts
