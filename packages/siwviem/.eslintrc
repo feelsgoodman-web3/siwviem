@@ -1,6 +1,6 @@
 {
   "root": true,
   "extends": [
-    "custom"
+    "@feelsgoodman/eslint-config-custom"
   ]
 }
