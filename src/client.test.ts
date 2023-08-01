@@ -11,6 +11,9 @@ import { describe, test, expect } from "vitest";
 
 import { SiwViemMessage } from "./client";
 import { SiwViemErrorType } from "./types";
+import { createPublicClient, http } from "viem";
+import { foundry } from "viem/chains";
+import { erc1271Address } from "../test/generated";
 
 describe(`Message Generation`, () => {
   test.concurrent.each(Object.entries(parsingPositive))(
@@ -127,6 +130,34 @@ describe(`Round Trip`, () => {
       ).resolves.toBeTruthy();
     }
   );
+});
+
+describe("ERC1271", () => {
+  test("Generates a Successfully Verifying message: ERC1271", async () => {
+    const account = privateKeyToAccount(
+      "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+    );
+
+    const publicClient = createPublicClient({
+      chain: foundry,
+      transport: http("http://127.0.0.1:8545"),
+    });
+
+    const msg = new SiwViemMessage({
+      domain: "service.org",
+      address: erc1271Address[foundry.id],
+      uri: "https://service.org/login",
+      version: "1",
+    });
+
+    const signature = await account.signMessage({
+      message: msg.toMessage(),
+    });
+
+    await expect(
+      msg.verify({ signature }, { publicClient }).then(({ success }) => success)
+    ).resolves.toBeTruthy();
+  });
 });
 
 describe(`Unit`, () => {
