@@ -101,7 +101,7 @@ export const isValidISO8601Date = (inputDate: string): boolean => {
   return inputMatch.groups.date === parsedInputMatch?.groups?.date;
 };
 
-export const checkInvalidKeys = <T extends Record<string, unknown>>(
+export const checkInvalidKeys = <T extends Record<string, any>>(
   obj: T,
   keys: Array<keyof T>
 ): Array<keyof T> => {
