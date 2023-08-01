@@ -46,6 +46,5 @@
     "viem": {
       "optional": false
     }
-  },
-  "packageManager": "pnpm@8.6.11"
+  }
 }
