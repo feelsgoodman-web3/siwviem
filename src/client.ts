@@ -13,13 +13,22 @@ import {
   VerifyParams,
   VerifyParamsKeys,
 } from "./types";
-import { Address, getAddress, recoverMessageAddress } from "viem";
+import {
+  Address,
+  bytesToHex,
+  Chain,
+  getAddress,
+  PublicClient,
+  recoverMessageAddress,
+  Transport,
+} from "viem";
 import {
   checkContractWalletSignature,
   checkInvalidKeys,
   generateNonce,
   isValidISO8601Date,
 } from "./utils";
+import { ByteArray, Hex } from "viem/src/types/misc";
 
 export class SiwViemMessage {
   /**RFC 4501 dns authority that is requesting the signing. */
@@ -162,34 +171,7 @@ export class SiwViemMessage {
       this.validateDomainBinding(params.domain);
       this.validateNonceBinding(params.nonce);
       this.validateMessageTime(params.time);
-
-      const EIP4361Message = this.prepareMessage();
-
-      const recoveredAddress = await recoverMessageAddress({
-        message: EIP4361Message,
-        signature: params.signature,
-      });
-
-      if (recoveredAddress === this.address) {
-        return { success: true, data: this };
-      } else {
-        const isContractWalletSignatureValid =
-          opts.publicClient &&
-          (await checkContractWalletSignature(
-            this,
-            params.signature,
-            opts.publicClient
-          ));
-        if (isContractWalletSignatureValid) {
-          return { success: true, data: this };
-        } else {
-          throw new SiwViemError(
-            SiwViemErrorType.INVALID_SIGNATURE,
-            recoveredAddress,
-            `Resolved address to be ${this.address}`
-          );
-        }
-      }
+      await this.validateSignature(params.signature, opts.publicClient);
     } catch (error) {
       if (opts.suppressExceptions) {
         return { success: false, data: this, error: error };
@@ -197,8 +179,15 @@ export class SiwViemMessage {
         throw error;
       }
     }
+
+    return { success: true, data: this };
   }
 
+  /**
+   * Validates the parameters provided for the verification process.
+   * @param params The parameters to be validated.
+   * @throws {Error} Throws an error if the provided keys in params are invalid.
+   */
   private validateParams(params: VerifyParams): void {
     const invalidParams: Array<keyof VerifyParams> =
       checkInvalidKeys<VerifyParams>(params, VerifyParamsKeys);
@@ -209,6 +198,11 @@ export class SiwViemMessage {
     }
   }
 
+  /**
+   * Validates the options provided for the verification process.
+   * @param opts The options to be validated.
+   * @throws {Error} Throws an error if the provided keys in opts are invalid.
+   */
   private validateOpts(opts: VerifyOpts): void {
     const invalidOpts: Array<keyof VerifyOpts> = checkInvalidKeys<VerifyOpts>(
       opts,
@@ -221,6 +215,11 @@ export class SiwViemMessage {
     }
   }
 
+  /**
+   * Checks the domain binding of the object against the provided domain.
+   * @param domain The domain to be checked.
+   * @throws {SiwViemError} Throws an error if the domain doesn't match the object's domain.
+   */
   private validateDomainBinding(domain?: string): void {
     if (domain && domain !== this.domain) {
       throw new SiwViemError(
@@ -231,6 +230,11 @@ export class SiwViemMessage {
     }
   }
 
+  /**
+   * Checks the nonce binding of the object against the provided nonce.
+   * @param nonce The nonce to be checked.
+   * @throws {SiwViemError} Throws an error if the nonce doesn't match the object's nonce.
+   */
   private validateNonceBinding(nonce?: string): void {
     if (nonce && nonce !== this.nonce) {
       throw new SiwViemError(
@@ -241,26 +245,96 @@ export class SiwViemMessage {
     }
   }
 
+  /**
+   * Validates if the provided message time is within the valid range.
+   * @param time The time of the message to be validated.
+   * @throws {Error} Throws an error if the provided time is not valid.
+   * @throws {SiwViemError} Throws an error if the time is either not yet valid or expired.
+   */
   private validateMessageTime(time?: string): void {
+    const isValidDateObj = d =>
+      d instanceof Date &&
+      typeof d.getTime === "function" &&
+      !isNaN(d.getTime());
+
     const checkTime = new Date(time || new Date());
-    if (
-      this.expirationTime &&
-      checkTime.getTime() >= new Date(this.expirationTime).getTime()
-    ) {
-      throw new SiwViemError(
-        SiwViemErrorType.EXPIRED_MESSAGE,
-        checkTime.toISOString(),
-        this.expirationTime
-      );
+
+    if (!isValidDateObj(checkTime)) {
+      throw new Error(`${checkTime} is not a valid date object`);
     }
-    if (
-      this.notBefore &&
-      checkTime.getTime() < new Date(this.notBefore).getTime()
-    ) {
+
+    if (this.expirationTime) {
+      const expirationTime = new Date(this.expirationTime);
+      if (!isValidDateObj(expirationTime)) {
+        throw new Error(`${expirationTime} is not a valid date object`);
+      }
+
+      if (checkTime.getTime() >= expirationTime.getTime()) {
+        throw new SiwViemError(
+          SiwViemErrorType.EXPIRED_MESSAGE,
+          checkTime.toISOString(),
+          this.expirationTime
+        );
+      }
+    }
+    if (this.notBefore) {
+      const notBefore = new Date(this.notBefore);
+
+      if (!isValidDateObj(notBefore)) {
+        throw new Error(`${notBefore} is not a valid date object`);
+      }
+      if (checkTime.getTime() < notBefore.getTime()) {
+        throw new SiwViemError(
+          SiwViemErrorType.NOT_YET_VALID_MESSAGE,
+          checkTime.toISOString(),
+          this.notBefore
+        );
+      }
+    }
+  }
+
+  /**
+   * Validates the provided signature against the message.
+   * @param signature The signature to be validated.
+   * @param publicClient The public client which may be used for additional validation.
+   * @throws {SiwViemError} Throws an error if the signature is invalid or the recovered address doesn't match.
+   */
+  private async validateSignature(
+    signature: Hex | ByteArray,
+    publicClient?: PublicClient<Transport, Chain>
+  ): Promise<void> {
+    const EIP4361Message = this.prepareMessage();
+    const hexedSignature =
+      typeof signature === "string" ? signature : bytesToHex(signature);
+
+    const normalizedSignatureBuf = Buffer.alloc(65);
+    normalizedSignatureBuf.write(hexedSignature.substring(2), "hex");
+    const normalizedSignature: `0x${string}` = `0x${normalizedSignatureBuf.toString(
+      "hex"
+    )}`;
+
+    const recoveredAddress = await recoverMessageAddress({
+      message: EIP4361Message,
+      signature: normalizedSignature,
+    });
+
+    if (recoveredAddress === this.address) {
+      return;
+    }
+
+    const isValid =
+      publicClient &&
+      (await checkContractWalletSignature(
+        this,
+        normalizedSignature,
+        publicClient
+      ));
+
+    if (!isValid) {
       throw new SiwViemError(
-        SiwViemErrorType.NOT_YET_VALID_MESSAGE,
-        checkTime.toISOString(),
-        this.notBefore
+        SiwViemErrorType.INVALID_SIGNATURE,
+        recoveredAddress,
+        `Resolved address to be ${this.address}`
       );
     }
   }
