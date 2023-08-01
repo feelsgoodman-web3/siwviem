@@ -13,7 +13,7 @@ This is a monorepo for all the packages that make up the Feelsgoodman ecosystem.
 
 This Turborepo includes the following packages and configs:
 
-- `packages/siwviem`: Component documentation site with Storybook
+- `packages/siwviem`: Sign-in with Viem package
 - `packages/typescript-config`: Shared `tsconfig.json`s used throughout the Turborepo
 - `packages/eslint-config-config`: ESLint preset
 
