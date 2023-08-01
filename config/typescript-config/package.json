@@ -1,0 +1,14 @@
+{
+  "name": "typescript-config",
+  "version": "0.0.0",
+  "exports": {
+    "./base.json": "./base.json",
+    "./cjs.json": "./esm.json",
+    "./react-library.json": "./react-library.json"
+  },
+  "files": [
+    "./base.json",
+    "./cjs.json",
+    "./react-library.json"
+  ]
+}
