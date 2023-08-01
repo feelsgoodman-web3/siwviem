@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "hardhat/console.sol";
 
 interface IERC1271 {
     function isValidSignature(bytes32 _hash, bytes memory _signature) external view returns (bytes4 magicValue);
