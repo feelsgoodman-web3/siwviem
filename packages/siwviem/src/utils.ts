@@ -49,7 +49,7 @@ export const checkContractWalletSignature = async (
  * @param value any value to have it's existence checked
  * @returns A boolean containing the result of the validation
  */
-export const exists = (value: any): boolean => {
+export const exists = (value: unknown): boolean => {
   if (value === null) {
     return false;
   }
@@ -101,7 +101,7 @@ export const isValidISO8601Date = (inputDate: string): boolean => {
   return inputMatch.groups.date === parsedInputMatch?.groups?.date;
 };
 
-export const checkInvalidKeys = <T extends Record<string, any>>(
+export const checkInvalidKeys = <T extends Record<string, unknown>>(
   obj: T,
   keys: Array<keyof T>
 ): Array<keyof T> => {
