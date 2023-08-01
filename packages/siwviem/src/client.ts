@@ -13,10 +13,17 @@ import {
   VerifyParams,
   VerifyParamsKeys,
 } from "./types";
-import { Address, bytesToHex, getAddress, recoverMessageAddress } from "viem";
+import {
+  Address,
+  bytesToHex,
+  getAddress,
+  recoverMessageAddress,
+  zeroAddress,
+} from "viem";
 import {
   checkContractWalletSignature,
   checkInvalidKeys,
+  exists,
   generateNonce,
   isValidISO8601Date,
 } from "./utils";
@@ -29,7 +36,7 @@ export class SiwViemMessage {
   address: Address;
   /**Human-readable ASCII assertion that the user will sign, and it must not
    * contain `\n`. */
-  statement?: string;
+  statement?: string | null;
   /**RFC 3986 URI referring to the resource that is the subject of the signing
    *  (as in the __subject__ of a claim). */
   uri: string;
@@ -37,25 +44,25 @@ export class SiwViemMessage {
   version: string;
   /**EIP-155 Chain ID to which the session is bound, and the network where
    * Contract Accounts must be resolved. */
-  chainId: number;
+  chainId: number | string;
   /**Randomized token used to prevent replay attacks, at least 8 alphanumeric
    * characters. */
-  nonce: string;
+  nonce?: string | null;
   /**ISO 8601 datetime string of the current time. */
   issuedAt?: string;
   /**ISO 8601 datetime string that, if present, indicates when the signed
    * authentication message is no longer valid. */
-  expirationTime?: string;
+  expirationTime?: string | null;
   /**ISO 8601 datetime string that, if present, indicates when the signed
    * authentication message will become valid. */
-  notBefore?: string;
+  notBefore?: string | null;
   /**System-specific identifier that may be used to uniquely refer to the
    * sign-in request. */
-  requestId?: string;
+  requestId?: string | null;
   /**List of information or references to information the user wishes to have
    * resolved as part of authentication by the relying party. They are
    * expressed as RFC 3986 URIs separated by `\n- `. */
-  resources?: Array<string>;
+  resources?: Array<string> | null;
 
   /**
    * Creates a parsed Sign-In with Ethereum Message (EIP-4361) object from a
@@ -66,9 +73,32 @@ export class SiwViemMessage {
   constructor(param: string | Partial<SiwViemMessage>) {
     if (typeof param === "string") {
       const parsedMessage = new ParsedMessage(param);
-      Object.assign(this, parsedMessage);
+      this.domain = parsedMessage.domain;
+      this.address = parsedMessage.address as `0x${string}`;
+      this.statement = parsedMessage.statement;
+      this.uri = parsedMessage.uri;
+      this.version = parsedMessage.version;
+      this.nonce = parsedMessage.nonce;
+      this.issuedAt = parsedMessage.issuedAt;
+      this.expirationTime = parsedMessage.expirationTime;
+      this.notBefore = parsedMessage.notBefore;
+      this.requestId = parsedMessage.requestId;
+      this.chainId = parsedMessage.chainId;
+      this.resources = parsedMessage.resources;
     } else {
-      Object.assign(this, param);
+      this.domain = param.domain || "";
+      this.address = param.address || zeroAddress;
+      this.statement = param?.statement;
+      this.uri = param.uri || "";
+      this.version = param.version || "1";
+      this.chainId = param.chainId || 1;
+      this.nonce = param.nonce;
+      this.issuedAt = param?.issuedAt;
+      this.expirationTime = param?.expirationTime;
+      this.notBefore = param?.notBefore;
+      this.requestId = param?.requestId;
+      this.resources = param?.resources;
+
       if (typeof this.chainId === "string") {
         this.chainId = parseIntegerNumber(this.chainId);
       }
@@ -165,7 +195,7 @@ export class SiwViemMessage {
       await this.validateSignature(params, opts);
     } catch (error) {
       if (opts.suppressExceptions) {
-        return { success: false, data: this, error: error };
+        return { success: false, data: this, error: error as SiwViemError };
       } else {
         throw error;
       }
@@ -227,11 +257,11 @@ export class SiwViemMessage {
    * @throws {SiwViemError} Throws an error if the nonce doesn't match the object's nonce.
    */
   private validateNonceBinding(nonce?: string): void {
-    if (nonce && nonce !== this.nonce) {
+    if (exists(nonce) && nonce !== this.nonce) {
       throw new SiwViemError(
         SiwViemErrorType.NONCE_MISMATCH,
         nonce,
-        this.nonce
+        this.nonce || ""
       );
     }
   }
@@ -243,7 +273,7 @@ export class SiwViemMessage {
    * @throws {SiwViemError} Throws an error if the time is either not yet valid or expired.
    */
   private validateMessageTime(time?: string): void {
-    const isValidDateObj = d =>
+    const isValidDateObj = (d: Date | unknown) =>
       d instanceof Date &&
       typeof d.getTime === "function" &&
       !isNaN(d.getTime());
@@ -315,72 +345,65 @@ export class SiwViemMessage {
       return;
     }
 
-    const EIP1271Promise = checkContractWalletSignature(
-      this,
-      normalizedSignature,
-      opts?.publicClient
-    )
-      .then(isValid => {
-        if (!isValid) {
+    if (opts?.publicClient) {
+      const EIP1271Promise = checkContractWalletSignature(
+        this,
+        normalizedSignature,
+        opts.publicClient
+      )
+        .then(isValid => {
+          if (!isValid) {
+            return {
+              success: false,
+              data: this,
+              error: new SiwViemError(
+                SiwViemErrorType.INVALID_SIGNATURE,
+                recoveredAddress,
+                `Resolved address to be ${this.address}`
+              ),
+            };
+          }
+          return {
+            success: true,
+            data: this,
+          };
+        })
+        .catch(error => {
           return {
             success: false,
             data: this,
-            error: new SiwViemError(
-              SiwViemErrorType.INVALID_SIGNATURE,
-              recoveredAddress,
-              `Resolved address to be ${this.address}`
-            ),
+            error,
           };
+        });
+
+      const isValid = await Promise.all([
+        EIP1271Promise,
+        opts
+          ?.verificationFallback?.(params, opts, this, EIP1271Promise)
+          ?.then(res => res)
+          ?.catch((res: SiwViemResponse) => res),
+      ]).then(([EIP1271Response, fallbackResponse]) => {
+        if (fallbackResponse) {
+          return fallbackResponse.success;
+        } else {
+          return EIP1271Response.success;
         }
-        return {
-          success: true,
-          data: this,
-        };
-      })
-      .catch(error => {
-        return {
-          success: false,
-          data: this,
-          error,
-        };
       });
-
-    const isValid = await Promise.all([
-      EIP1271Promise,
-      opts
-        ?.verificationFallback?.(params, opts, this, EIP1271Promise)
-        ?.then(res => res)
-        ?.catch((res: SiwViemResponse) => res),
-    ]).then(([EIP1271Response, fallbackResponse]) => {
-      if (fallbackResponse) {
-        return fallbackResponse.success;
-      } else {
-        return EIP1271Response.success;
-      }
-    });
-
-    if (!isValid) {
-      throw new SiwViemError(
-        SiwViemErrorType.INVALID_SIGNATURE,
-        recoveredAddress,
-        `Resolved address to be ${this.address}`
-      );
+      if (isValid) return;
     }
+
+    throw new SiwViemError(
+      SiwViemErrorType.INVALID_SIGNATURE,
+      recoveredAddress,
+      `Resolved address to be ${this.address}`
+    );
   }
 
   /**
    * Validates the values of this object fields.
    * @throws Throws an {ErrorType} if a field is invalid.
    */
-  private validateMessage(...args) {
-    /** Checks if the user might be using the function to verify instead of validate. */
-    if (args.length > 0) {
-      throw new SiwViemError(
-        SiwViemErrorType.UNABLE_TO_PARSE,
-        `Unexpected argument in the validateMessage function.`
-      );
-    }
-
+  private validateMessage() {
     /** `domain` check. */
     if (
       !this.domain ||
@@ -394,7 +417,7 @@ export class SiwViemMessage {
     }
 
     /** EIP-55 `address` check. */
-    if (!isEIP55Address(this.address)) {
+    if (!isEIP55Address(this.address) || this.address === zeroAddress) {
       throw new SiwViemError(
         SiwViemErrorType.INVALID_ADDRESS,
         getAddress(this.address),
@@ -421,11 +444,11 @@ export class SiwViemMessage {
 
     /** Check if the nonce is alphanumeric and bigger then 8 characters */
     const nonce = this?.nonce?.match(/[a-zA-Z0-9]{8,}/);
-    if (!nonce || this.nonce.length < 8 || nonce[0] !== this.nonce) {
+    if (!nonce || (this.nonce?.length || 0) < 8 || nonce[0] !== this.nonce) {
       throw new SiwViemError(
         SiwViemErrorType.INVALID_NONCE,
-        `Length > 8 (${nonce.length}). Alphanumeric.`,
-        this.nonce
+        `Length > 8 (${nonce?.length}). Alphanumeric.`,
+        this.nonce || ""
       );
     }
 

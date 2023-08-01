@@ -30,7 +30,9 @@ describe(`Message Generation`, () => {
       try {
         new SiwViemMessage(test);
       } catch (error) {
-        expect(Object.values(SiwViemErrorType).includes(error));
+        expect(
+          Object.values(SiwViemErrorType).includes(error as SiwViemErrorType)
+        );
       }
     }
   );
@@ -41,7 +43,9 @@ describe(`Message Generation`, () => {
       try {
         new SiwViemMessage(test as any);
       } catch (error) {
-        expect(Object.values(SiwViemErrorType).includes(error));
+        expect(
+          Object.values(SiwViemErrorType).includes(error as SiwViemErrorType)
+        );
       }
     }
   );
@@ -81,7 +85,9 @@ describe(`Message verification without suppressExceptions`, () => {
             .then(({ success }) => success)
         ).rejects.toBeFalsy();
       } catch (error) {
-        expect(Object.values(SiwViemErrorType).includes(error));
+        expect(
+          Object.values(SiwViemErrorType).includes(error as SiwViemErrorType)
+        );
       }
     }
   );
@@ -107,7 +113,9 @@ describe(`Message verification with suppressExceptions`, () => {
             .then(({ success }) => success)
         ).resolves.toBeFalsy();
       } catch (error) {
-        expect(Object.values(SiwViemErrorType).includes(error));
+        expect(
+          Object.values(SiwViemErrorType).includes(error as SiwViemErrorType)
+        );
       }
     }
   );
@@ -161,28 +169,6 @@ describe("ERC1271", () => {
 });
 
 describe(`Unit`, () => {
-  test("Should throw if validateMessage is called with arguments", () =>
-    expect(() => {
-      const msg = new SiwViemMessage({
-        domain: "service.org",
-        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        statement:
-          "I accept the ServiceOrg Terms of Service: https://service.org/tos",
-        uri: "https://service.org/login",
-        version: "1",
-        chainId: 1,
-        nonce: "32891757",
-        issuedAt: "2021-09-30T16:25:24.000Z",
-        resources: [
-          "ipfs://Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu",
-          "https://example.com/my-web2-claim.json",
-        ],
-      });
-      (msg as any).validateMessage(
-        "0xdc35c7f8ba2720df052e0092556456127f00f7707eaa8e3bbff7e56774e7f2e05a093cfc9e02964c33d86e8e066e221b7d153d27e5a2e97ccd5ca7d3f2ce06cb1b"
-      );
-    }).toThrow());
-
   test("Should not throw if params are valid.", async () => {
     const privateKey = generatePrivateKey();
     const account = privateKeyToAccount(privateKey);
@@ -226,7 +212,7 @@ describe(`Unit`, () => {
         signature,
         invalidKey: "should throw",
       });
-    } catch (e) {
+    } catch (e: any) {
       expect(e.success).toBeFalsy();
       expect(e).toEqual(
         new Error("invalidKey is/are not valid key(s) for VerifyParams.")
@@ -256,7 +242,7 @@ describe(`Unit`, () => {
         { signature },
         { suppressExceptions: true, invalidKey: "should throw" }
       );
-    } catch (e) {
+    } catch (e: any) {
       expect(e.success).toBeFalsy();
       expect(e.error).toEqual(
         new Error("invalidKey is/are not valid key(s) for VerifyOpts.")

@@ -1,0 +1,8 @@
+{
+  "extends": "typescript-config/cjs.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules"],
+  "include": ["src", "./package.json", "*.config.ts"]
+}

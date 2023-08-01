@@ -45,6 +45,19 @@ export const checkContractWalletSignature = async (
 };
 
 /**
+ * A function to assert if given value is null or undefined
+ * @param value any value to have it's existence checked
+ * @returns A boolean containing the result of the validation
+ */
+export const exists = (value: unknown): boolean => {
+  if (value === null) {
+    return false;
+  }
+
+  return value !== undefined;
+};
+
+/**
  * This method leverages a native CSPRNG with support for both browser and Node.js
  * environments in order generate a cryptographically secure nonce for use in the
  * SiwViemMessage in order to prevent replay attacks.
@@ -74,7 +87,7 @@ export const isValidISO8601Date = (inputDate: string): boolean => {
   const inputMatch = ISO8601.exec(inputDate);
 
   /* if inputMatch is null the date is not ISO-8601 */
-  if (!inputDate) {
+  if (!exists(inputMatch) || !inputMatch?.groups) {
     return false;
   }
 
@@ -85,10 +98,10 @@ export const isValidISO8601Date = (inputDate: string): boolean => {
   const parsedInputMatch = ISO8601.exec(inputDateParsed);
 
   /* Compare remaining fields */
-  return inputMatch.groups.date === parsedInputMatch.groups.date;
+  return inputMatch.groups.date === parsedInputMatch?.groups?.date;
 };
 
-export const checkInvalidKeys = <T>(
+export const checkInvalidKeys = <T extends Record<string, any>>(
   obj: T,
   keys: Array<keyof T>
 ): Array<keyof T> => {
