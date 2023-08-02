@@ -18,8 +18,7 @@
     "build": "tsup src/index.ts",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "lint": "eslint \"src/**/*.ts*\"",
-    "lint:fix": "eslint \"src/**/*.ts*\" --fix",
-    "test": "vitest"
+    "lint:fix": "eslint \"src/**/*.ts*\" --fix"
   },
   "dependencies": {
     "@feelsgoodman/siwviem": "workspace:1.2.1"
