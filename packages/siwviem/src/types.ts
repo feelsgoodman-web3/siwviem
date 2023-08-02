@@ -1,5 +1,5 @@
 import type { SiwViemMessage } from "./client";
-import type { Chain, PublicClient, Transport } from "viem";
+import type { Chain, PublicClient, Transport, TypedData } from "viem";
 import type { ByteArray, Hex } from "viem/src/types/misc";
 
 export interface VerifyParams {
@@ -122,4 +122,28 @@ export enum SiwViemErrorType {
 
   /** Thrown when some required field is missing. */
   UNABLE_TO_PARSE = "Unable to parse the message.",
+}
+
+enum SignatureType {
+  CONTRACT_SIGNATURE = "CONTRACT_SIGNATURE",
+  APPROVED_HASH = "APPROVED_HASH",
+  EOA = "EOA",
+  ETH_SIGN = "ETH_SIGN",
+}
+
+export interface TransactionServiceSafeMessage {
+  created: string;
+  modified: string;
+  messageHash: string;
+  message: string | TypedData;
+  proposedBy: string; // Address of the owner that proposed the message
+  safeAppId: number | null;
+  confirmations: {
+    created: string;
+    modified: string;
+    owner: string;
+    signature: string;
+    signatureType: SignatureType;
+  }[];
+  preparedSignature: string; // Will be continuously updated by service, but only valid until threshold met
 }

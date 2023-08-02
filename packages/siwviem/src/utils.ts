@@ -3,20 +3,9 @@ import { Chain, PublicClient, Transport, hashMessage } from "viem";
 
 import type { SiwViemMessage } from "./client";
 import { ByteArray, Hex } from "viem/src/types/misc";
+import { EIP1271_ABI } from "./abis";
+import { EIP1271_MAGICVALUE } from "./constants";
 
-const EIP1271_ABI = [
-  {
-    stateMutability: "view",
-    type: "function",
-    inputs: [
-      { name: "_hash", internalType: "bytes32", type: "bytes32" },
-      { name: "_signature", internalType: "bytes", type: "bytes" },
-    ],
-    name: "isValidSignature",
-    outputs: [{ name: "magicValue", internalType: "bytes4", type: "bytes4" }],
-  },
-];
-const EIP1271_MAGICVALUE = "0x1626ba7e";
 const ISO8601 =
   /^(?<date>[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]))[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(.[0-9]+)?(([Zz])|([+|-]([01][0-9]|2[0-3]):[0-5][0-9]))$/;
 
@@ -34,13 +23,13 @@ export const checkContractWalletSignature = async (
   publicClient: PublicClient<Transport, Chain>
 ): Promise<boolean> => {
   const hashedMessage = hashMessage(message.prepareMessage());
+
   const res = await publicClient.readContract({
     address: message.address,
     abi: EIP1271_ABI,
     functionName: "isValidSignature",
     args: [hashedMessage, signature],
   });
-
   return EIP1271_MAGICVALUE === res;
 };
 
