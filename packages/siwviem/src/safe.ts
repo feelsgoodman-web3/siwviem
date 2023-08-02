@@ -21,7 +21,7 @@ export const fetchSafeMessage = async (
   safeMessageHash: string,
   chainId: number
 ): Promise<TransactionServiceSafeMessage> => {
-  const SAFE_TX_URL = SAFE_TRANSACTION_URLS[chainId.toString()];
+  const SAFE_TX_URL = SAFE_TRANSACTION_URLS[chainId];
 
   return fetch(`${SAFE_TX_URL}/v1/messages/${safeMessageHash}/`, {
     headers: { "Content-Type": "application/json" },
