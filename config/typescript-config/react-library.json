@@ -3,10 +3,17 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
+    "allowJs": true,
     "jsx": "react-jsx",
-    "lib": ["ES2015", "DOM"],
-    "module": "ESNext",
-    "target": "es6",
-    "resolveJsonModule": true
+    "lib": ["es2021", "dom"],
+    "module": "esnext",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "target": "es2021",
+    "types": ["node"]
   }
 }
