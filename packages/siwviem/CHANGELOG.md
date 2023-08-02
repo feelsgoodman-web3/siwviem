@@ -1,5 +1,11 @@
 # @feelsgoodman/siwviem
 
+## 1.3.0
+
+### Minor Changes
+
+- [#17](https://github.com/feelsgoodman-web3/siwveim/pull/17) [`25a92e3`](https://github.com/feelsgoodman-web3/siwveim/commit/25a92e3a977587923bdd7e0a63dca20e254a6930) Thanks [@conwayconstar](https://github.com/conwayconstar)! - Add safe wallet signature checking
+
 ## 1.2.0
 
 ### Minor Changes
