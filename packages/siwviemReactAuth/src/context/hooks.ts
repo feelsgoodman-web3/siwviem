@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { SiwViemMessage } from "@feelsgoodman/siwviem";
-import { Address, useChainId, useSignMessage } from "wagmi";
+import { Address, useChainId, usePublicClient, useSignMessage } from "wagmi";
 
 import type { MessageOptions, Status, SiwViemAuthProps } from "./types";
 
@@ -15,6 +15,7 @@ export function usePrepareAuth({
   const chainId = useChainId();
   const [signature, setSignature] = useState(initialSignature);
   const [status, setStatus] = useState<Status>("loading");
+  const publicClient = usePublicClient();
 
   const signOut = useCallback(() => {
     setSignature(undefined);
@@ -28,7 +29,7 @@ export function usePrepareAuth({
       const message = new SiwViemMessage(msg);
       const { success } = await message.verify(
         { signature: sig },
-        { suppressExceptions: true }
+        { suppressExceptions: true, publicClient }
       );
       if (success) {
         setSignature(sig);
