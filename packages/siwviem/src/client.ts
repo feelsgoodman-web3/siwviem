@@ -27,6 +27,7 @@ import {
   generateNonce,
   isValidISO8601Date,
 } from "./utils";
+import { checkSafeWalletSignature } from "./safe";
 
 export class SiwViemMessage {
   /**RFC 4501 dns authority that is requesting the signing. */
@@ -346,47 +347,58 @@ export class SiwViemMessage {
     }
 
     if (opts?.publicClient) {
+      const success = (isValid: boolean) => {
+        if (!isValid) {
+          return {
+            success: false,
+            data: this,
+            error: new SiwViemError(
+              SiwViemErrorType.INVALID_SIGNATURE,
+              recoveredAddress,
+              `Resolved address to be ${this.address}`
+            ),
+          };
+        }
+        return {
+          success: true,
+          data: this,
+        };
+      };
+
+      const fail = (error: SiwViemError) => ({
+        success: false,
+        data: this,
+        error,
+      });
+
       const EIP1271Promise = checkContractWalletSignature(
         this,
         normalizedSignature,
         opts.publicClient
       )
-        .then(isValid => {
-          if (!isValid) {
-            return {
-              success: false,
-              data: this,
-              error: new SiwViemError(
-                SiwViemErrorType.INVALID_SIGNATURE,
-                recoveredAddress,
-                `Resolved address to be ${this.address}`
-              ),
-            };
-          }
-          return {
-            success: true,
-            data: this,
-          };
-        })
-        .catch(error => {
-          return {
-            success: false,
-            data: this,
-            error,
-          };
-        });
+        .then(success)
+        .catch(fail);
+
+      const SafePromise = checkSafeWalletSignature(
+        this,
+        normalizedSignature,
+        opts.publicClient
+      )
+        .then(success)
+        .catch(fail);
 
       const isValid = await Promise.all([
         EIP1271Promise,
+        SafePromise,
         opts
           ?.verificationFallback?.(params, opts, this, EIP1271Promise)
           ?.then(res => res)
           ?.catch((res: SiwViemResponse) => res),
-      ]).then(([EIP1271Response, fallbackResponse]) => {
+      ]).then(([EIP1271Response, SafeResponse, fallbackResponse]) => {
         if (fallbackResponse) {
           return fallbackResponse.success;
         } else {
-          return EIP1271Response.success;
+          return EIP1271Response.success || SafeResponse.success;
         }
       });
       if (isValid) return;
