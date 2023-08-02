@@ -1,5 +1,12 @@
 # @feelsgoodman/siwveim-react-auth
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`25a92e3`](https://github.com/feelsgoodman-web3/siwveim/commit/25a92e3a977587923bdd7e0a63dca20e254a6930)]:
+  - @feelsgoodman/siwviem@1.3.0
+
 ## 0.1.1
 
 ### Patch Changes
