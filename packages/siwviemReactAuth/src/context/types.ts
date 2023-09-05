@@ -13,6 +13,7 @@ export interface SiwViemAuthProps {
   initialSignature?: `0x${string}`;
   onAuthenticated?(sig: `0x${string}`, msg: string): void;
   onSignOut?(): void;
+  onSigning?(message: SiwViemMessage): void;
 }
 
 export type Status =

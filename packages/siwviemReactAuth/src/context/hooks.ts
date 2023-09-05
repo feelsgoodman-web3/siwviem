@@ -10,6 +10,7 @@ export function usePrepareAuth({
   getMessageOptions,
   onAuthenticated,
   onSignOut,
+  onSigning,
   initialSignature,
 }: Omit<SiwViemAuthProps, "children">) {
   const chainId = useChainId();
@@ -41,14 +42,10 @@ export function usePrepareAuth({
 
       return success;
     },
-    [setSignature, setStatus, signOut, onAuthenticated]
+    [publicClient, onAuthenticated, signOut]
   );
 
-  const {
-    signMessage: wagmiSignMessage,
-    variables,
-    isLoading,
-  } = useSignMessage({
+  const { signMessageAsync, variables, isLoading } = useSignMessage({
     onSuccess: (sig, vars) => {
       verify(sig, vars.message);
     },
@@ -74,9 +71,11 @@ export function usePrepareAuth({
         chainId,
       });
 
-      wagmiSignMessage({ message: message.prepareMessage() });
+      onSigning?.(message);
+
+      signMessageAsync({ message: message.prepareMessage() }).catch(signOut);
     },
-    [getMessageOptions, chainId, wagmiSignMessage]
+    [getMessageOptions, chainId, signMessageAsync]
   );
 
   return useMemo(

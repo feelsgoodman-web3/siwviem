@@ -68,7 +68,17 @@ function Provider({
       verify: () => verify(signature, message),
       signOut,
     }),
-    [address, signMessage, signature, message, isConnecting, isReconnecting]
+    [
+      signature,
+      message,
+      isConnecting,
+      isReconnecting,
+      status,
+      signOut,
+      signMessage,
+      address,
+      verify,
+    ]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
