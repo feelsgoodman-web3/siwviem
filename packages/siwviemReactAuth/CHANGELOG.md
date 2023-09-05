@@ -1,5 +1,12 @@
 # @feelsgoodman/siwveim-react-auth
 
+## 0.2.0
+
+### Minor Changes
+
+- [`e7fac68`](https://github.com/feelsgoodman-web3/siwveim/commit/e7fac687da98af78a71ac0dd1b6d5a2506f1a7aa) Thanks [@conwayconstar](https://github.com/conwayconstar)! - Added onSiging hook
+  Made wagmi signature use async
+
 ## 0.1.2
 
 ### Patch Changes
