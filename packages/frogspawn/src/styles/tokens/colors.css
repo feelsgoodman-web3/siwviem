@@ -1,0 +1,155 @@
+:root,
+.light,
+.light-theme {
+  /*  Accent */
+  --accent-1: hsl(151, 60%, 99%);
+  --accent-2: hsl(150, 77.8%, 96.5%);
+  --accent-3: hsl(151, 65.9%, 93.7%);
+  --accent-4: hsl(152, 56.5%, 90%);
+  --accent-5: hsl(154, 49.1%, 85%);
+  --accent-6: hsl(156, 43.5%, 78.3%);
+  --accent-7: hsl(159, 40.2%, 68.7%);
+  --accent-8: hsl(164, 42%, 53.3%);
+  --accent-9: hsl(164, 60%, 40%);
+  --accent-10: hsl(164, 60.8%, 36.7%);
+  --accent-11: hsl(163, 65%, 28.9%);
+  --accent-12: hsl(160, 34%, 17.2%);
+  /*  Accent Alpha */
+  --accent-a1: hsla(160, 94.9%, 38.7%, 0.016);
+  --accent-a2: hsla(150, 99.1%, 44%, 0.063);
+  --accent-a3: hsla(150, 99.7%, 40.8%, 0.106);
+  --accent-a4: hsla(151, 99.8%, 36.3%, 0.157);
+  --accent-a5: hsla(153, 99.4%, 33.5%, 0.224);
+  --accent-a6: hsla(155, 99.8%, 30.4%, 0.31);
+  --accent-a7: hsla(159, 99.4%, 28.7%, 0.44);
+  --accent-a8: hsla(164, 99.9%, 29.6%, 0.663);
+  --accent-a9: hsla(164, 99.7%, 28.6%, 0.84);
+  --accent-a10: hsla(164, 100%, 25.9%, 0.855);
+  --accent-a11: hsla(163, 99.5%, 21%, 0.899);
+  --accent-a12: hsla(160, 98.8%, 6.7%, 0.887);
+  /* Gray  */
+  --gray-1: hsl(155, 30%, 98.8%);
+  --gray-2: hsl(150, 14.3%, 97.3%);
+  --gray-3: hsl(150, 8%, 94.5%);
+  --gray-4: hsl(150, 6%, 92%);
+  --gray-5: hsl(150, 4.9%, 89.5%);
+  --gray-6: hsl(150, 4.3%, 86.7%);
+  --gray-7: hsl(150, 3.7%, 82.8%);
+  --gray-8: hsl(150, 2.9%, 72.9%);
+  --gray-9: hsl(155, 3.5%, 54.2%);
+  --gray-10: hsl(158, 2.9%, 49.3%);
+  --gray-11: hsl(155, 3%, 38.5%);
+  --gray-12: hsl(155, 12%, 11.5%);
+  /* Gray Alpha */
+  --gray-a1: hsla(150, 92.6%, 26.5%, 0.016);
+  --gray-a2: hsla(150, 86.2%, 14.2%, 0.032);
+  --gray-a3: hsla(150, 95.7%, 6.9%, 0.059);
+  --gray-a4: hsla(160, 89%, 7.6%, 0.087);
+  --gray-a5: hsla(140, 96.8%, 5.5%, 0.11);
+  --gray-a6: hsla(140, 88.8%, 4.8%, 0.138);
+  --gray-a7: hsla(140, 91.7%, 3.6%, 0.177);
+  --gray-a8: hsla(150, 93.2%, 3%, 0.279);
+  --gray-a9: hsla(158, 97%, 3.4%, 0.475);
+  --gray-a10: hsla(163, 97%, 2.7%, 0.522);
+  --gray-a11: hsla(160, 95.5%, 2%, 0.628);
+  --gray-a12: hsla(154, 93.5%, 1.6%, 0.899);
+  /* Defaults */
+  --color-background: white;
+  --color-overlay: var(--gray-a8);
+  --color-panel-solid: white;
+  --color-panel-alpha: rgba(255, 255, 255, 0.8);
+  --color-surface: rgba(255, 255, 255, 0.9);
+  --color-surface-accent: var(--accent-a2);
+  --color-surface-gray: var(--accent-a2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  .dark,
+  .dark-theme {
+    /*  Accent */
+    --accent-1: hsl(152, 53%, 6.5%);
+    --accent-2: hsl(153, 47.6%, 8.2%);
+    --accent-3: hsl(154, 46.7%, 11%);
+    --accent-4: hsl(155, 47%, 13.2%);
+    --accent-5: hsl(156, 47.7%, 15.3%);
+    --accent-6: hsl(158, 49%, 18.5%);
+    --accent-7: hsl(160, 52%, 24.2%);
+    --accent-8: hsl(164, 59.8%, 34.1%);
+    --accent-9: hsl(164, 60%, 40%);
+    --accent-10: hsl(164, 66.8%, 43.7%);
+    --accent-11: hsl(163, 75%, 48.4%);
+    --accent-12: hsl(155, 70%, 81%);
+    /* Accent Alpha */
+    --accent-a1: hsla(120, 100%, 43.9%, 0.005);
+    --accent-a2: hsla(120, 100%, 49%, 0.031);
+    --accent-a3: hsla(145, 100%, 49.8%, 0.074);
+    --accent-a4: hsla(152, 100%, 49.7%, 0.109);
+    --accent-a5: hsla(156, 100%, 49.8%, 0.148);
+    --accent-a6: hsla(158, 99.1%, 54.5%, 0.2);
+    --accent-a7: hsla(159, 99.3%, 58.4%, 0.304);
+    --accent-a8: hsla(164, 99.9%, 59%, 0.498);
+    --accent-a9: hsla(164, 99.9%, 60.2%, 0.602);
+    --accent-a10: hsla(164, 99.8%, 58.3%, 0.702);
+    --accent-a11: hsla(163, 99.8%, 56.3%, 0.832);
+    --accent-a12: hsla(155, 99.4%, 85.9%, 0.936);
+    /* Gray  */
+    --gray-1: hsl(155, 7%, 9.2%);
+    --gray-2: hsl(150, 7.7%, 10.2%);
+    --gray-3: hsl(151, 5.5%, 15.2%);
+    --gray-4: hsl(152, 4.7%, 18.3%);
+    --gray-5: hsl(153, 4.2%, 21.1%);
+    --gray-6: hsl(153, 3.7%, 24.2%);
+    --gray-7: hsl(154, 3.3%, 28.7%);
+    --gray-8: hsl(156, 2.6%, 37.1%);
+    --gray-9: hsl(155, 6%, 41.5%);
+    --gray-10: hsl(157, 4.6%, 49.2%);
+    --gray-11: hsl(155, 5%, 68.3%);
+    --gray-12: hsl(155, 7%, 93%);
+    /* Gray Alpha */
+    --gray-a1: hsla(126, 100%, 43.9%, 0.005);
+    --gray-a2: hsla(150, 92.7%, 53%, 0.018);
+    --gray-a3: hsla(150, 95.5%, 88.9%, 0.074);
+    --gray-a4: hsla(156, 93.3%, 90.4%, 0.109);
+    --gray-a5: hsla(150, 94.8%, 94%, 0.139);
+    --gray-a6: hsla(156, 92.8%, 93.9%, 0.174);
+    --gray-a7: hsla(156, 92.4%, 95.3%, 0.226);
+    --gray-a8: hsla(156, 91.7%, 96.6%, 0.317);
+    --gray-a9: hsla(157, 99.8%, 93.3%, 0.381);
+    --gray-a10: hsla(158, 96.8%, 95.2%, 0.464);
+    --gray-a11: hsla(158, 98.1%, 97.6%, 0.667);
+    --gray-a12: hsla(150, 88%, 99.5%, 0.927);
+  }
+}
+
+.frogspawn-theme:where(.light, .light-theme) {
+  color-scheme: light;
+}
+
+.frogspawn-theme:where(.dark, .dark-theme) {
+  color-scheme: dark;
+}
+
+.frogspawn-theme {
+  --color-background: white;
+  --color-overlay: var(--gray-a8);
+  --color-panel-solid: white;
+  --color-panel-alpha: rgba(255, 255, 255, 0.8);
+  --color-surface: rgba(255, 255, 255, 0.9);
+  --color-surface-accent: var(--accent-a2);
+  --color-surface-gray: var(--accent-a2);
+  --accent-9-contrast: white;
+  --accent-surface: var(--accent-a2);
+  --gray-9-contrast: white;
+  --gray-surface: white;
+}
+
+:is(.dark, .dark-theme),
+:is(.dark, .dark-theme) .frogspawn-theme:not(.light, .light-theme) {
+  --color-overlay: rgba(0, 0, 0, 0.75);
+  --color-panel-solid: var(--gray-2);
+  --color-panel-alpha: var(--gray-a2);
+  --color-surface: rgba(0, 0, 0, 0.25);
+  --color-background: var(--gray-1);
+  --gray-surface: var(--gray-a2);
+}

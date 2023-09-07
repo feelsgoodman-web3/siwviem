@@ -1,0 +1,8 @@
+.frogspawn-theme {
+  background-color: var(--color-background);
+  color: var(--gray-12);
+  font-size: var(--default-font-size);
+  line-height: var(--default-line-height);
+  font-weight: var(--default-font-weight);
+}
+
