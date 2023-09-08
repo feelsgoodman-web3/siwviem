@@ -1,14 +1,25 @@
 import { boxDefs } from "src/definitions/box.props";
 import { type GetPropDefTypes } from "src/definitions/types";
 
-import { toKebabCase, withBreakpoints } from "src/utils";
-import { extractPaddingProps } from "src/definitions/padding.utils";
-import { extractMarginProps } from "src/definitions/margin.utils";
+import { withBreakpoints } from "src/utils";
+import {
+  extractPaddingProps,
+  withPaddingProps,
+} from "src/definitions/padding.utils";
+import {
+  extractMarginProps,
+  withMarginProps,
+} from "src/definitions/margin.utils";
+import {
+  extractPositionProps,
+  withPositionProps,
+} from "src/definitions/position.utils";
 
 export type BoxProps = GetPropDefTypes<typeof boxDefs>;
 export function extractBoxProps<T extends BoxProps>(props: T) {
   const { paddingProps, ...paddingRest } = extractPaddingProps(props);
-  const { marginProps, ...marginRest } = extractMarginProps(paddingRest);
+  const { positionProps, ...positionRest } = extractPositionProps(paddingRest);
+  const { marginProps, ...marginRest } = extractMarginProps(positionRest);
   const {
     alignSelf = boxDefs.alignSelf.default,
     content = boxDefs.content.default,
@@ -28,6 +39,7 @@ export function extractBoxProps<T extends BoxProps>(props: T) {
   return {
     layoutProps: {
       ...paddingProps,
+      ...positionProps,
       ...marginProps,
       alignSelf,
       content,
@@ -46,17 +58,25 @@ export function extractBoxProps<T extends BoxProps>(props: T) {
     ...rest,
   };
 }
-export function withBoxDefs<T extends BoxProps>(obj: T): string {
-  const { layoutProps } = extractBoxProps(obj);
-  return Object.entries(layoutProps)
-    .reduce<string[]>((acc, [key, value]) => {
-      if (typeof value === "undefined") return acc;
-      const prefix = key === "alignSelf" ? "self" : toKebabCase(key);
-      const classes = withBreakpoints(prefix, value);
-
-      if (classes) acc.push(classes);
-
-      return acc;
-    }, [])
+export function withBoxProps<T extends BoxProps>(props: T): string {
+  return [
+    withPaddingProps(props),
+    withMarginProps(props),
+    withPositionProps(props),
+    withBreakpoints("self", props.alignSelf),
+    withBreakpoints("content", props.content),
+    withBreakpoints("display", props.display),
+    withBreakpoints("gap", props.gap),
+    withBreakpoints("gap-x", props.gapX),
+    withBreakpoints("gap-y", props.gapY),
+    withBreakpoints("items", props.items),
+    withBreakpoints("justify", props.justify),
+    withBreakpoints("justify-items", props.justifyItems),
+    withBreakpoints("justify-self", props.justifySelf),
+    withBreakpoints("place-content", props.placeContent),
+    withBreakpoints("space-x", props.spaceX),
+    withBreakpoints("space-y", props.spaceY),
+  ]
+    .filter(Boolean)
     .join(" ");
 }

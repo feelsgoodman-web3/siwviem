@@ -34,16 +34,17 @@ export function extractPaddingProps<T extends PaddingProps>(props: T) {
 }
 
 export function withPaddingProps<T extends PaddingProps>(props: T) {
-  const { paddingProps } = extractPaddingProps(props);
-  return Object.entries(paddingProps)
-    .reduce<string[]>((acc, [key, value]) => {
-      if (typeof value === "undefined") return acc;
-      const classes = withBreakpoints(key, value);
-
-      if (classes) acc.push(classes);
-
-      return acc;
-    }, [])
+  return [
+    withBreakpoints("p", props.p),
+    withBreakpoints("pb", props.pb),
+    withBreakpoints("pe", props.pe),
+    withBreakpoints("pl", props.pl),
+    withBreakpoints("pr", props.pr),
+    withBreakpoints("ps", props.ps),
+    withBreakpoints("pt", props.pt),
+    withBreakpoints("px", props.px),
+    withBreakpoints("py", props.py),
+  ]
     .filter(Boolean)
     .join(" ");
 }

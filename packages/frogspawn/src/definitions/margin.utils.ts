@@ -34,16 +34,17 @@ export function extractMarginProps<T extends MarginProps>(props: T) {
 }
 
 export function withMarginProps<T extends MarginProps>(props: T) {
-  const { marginProps } = extractMarginProps(props);
-  return Object.entries(marginProps)
-    .reduce<string[]>((acc, [key, value]) => {
-      if (typeof value === "undefined") return acc;
-      const classes = withBreakpoints(key, value);
-
-      if (classes) acc.push(classes);
-
-      return acc;
-    }, [])
+  return [
+    withBreakpoints("m", props.m),
+    withBreakpoints("mb", props.mb),
+    withBreakpoints("me", props.me),
+    withBreakpoints("ml", props.ml),
+    withBreakpoints("mr", props.mr),
+    withBreakpoints("ms", props.ms),
+    withBreakpoints("mt", props.mt),
+    withBreakpoints("mx", props.mx),
+    withBreakpoints("my", props.my),
+  ]
     .filter(Boolean)
     .join(" ");
 }

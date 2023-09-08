@@ -2,10 +2,11 @@ import { SPACING_SCALE } from "src/constants";
 import { PropDef } from "src/definitions/types";
 import { paddingDefs, PaddingDefs } from "src/definitions/padding.props";
 import { marginDefs, MarginDefs } from "src/definitions/margin.props";
+import { positionDefs, PositionDefs } from "src/definitions/position.props";
 
-export const alignSelf = ["auto", "center", "end", "start", "stretch"] as const;
+const alignSelf = ["auto", "center", "end", "start", "stretch"] as const;
 
-export const content = [
+const content = [
   "around",
   "baseline",
   "between",
@@ -17,9 +18,9 @@ export const content = [
   "stretch",
 ] as const;
 
-export const items = ["center", "end", "normal", "start", "stretch"] as const;
+const items = ["center", "end", "normal", "start", "stretch"] as const;
 
-export const justify = [
+const justify = [
   "center",
   "end",
   "normal",
@@ -29,11 +30,11 @@ export const justify = [
   "start",
 ] as const;
 
-export const justifyItems = items; // They have the same values
+const justifyItems = items; // They have the same values
 
-export const justifySelf = alignSelf; // They have the same values
+const justifySelf = alignSelf; // They have the same values
 
-export const placeContent = [
+const placeContent = [
   "around",
   "baseline",
   "between",
@@ -44,11 +45,11 @@ export const placeContent = [
   "stretch",
 ] as const;
 
-export const gap = SPACING_SCALE;
-export const gapY = gap;
-export const gapX = gap;
+const gap = SPACING_SCALE;
+const gapY = gap;
+const gapX = gap;
 
-export const display = [
+const display = [
   "block",
   "inline-block",
   "inline",
@@ -62,10 +63,10 @@ export const display = [
   "none",
 ] as const;
 
-export const spaceX = [...SPACING_SCALE, "reverse"] as const;
-export const spaceY = [...SPACING_SCALE, "reverse"] as const;
+const spaceX = [...SPACING_SCALE, "reverse"] as const;
+const spaceY = [...SPACING_SCALE, "reverse"] as const;
 
-export interface BoxDefs extends PaddingDefs, MarginDefs {
+export interface BoxDefs extends PaddingDefs, MarginDefs, PositionDefs {
   alignSelf: PropDef<(typeof alignSelf)[number]>;
   content: PropDef<(typeof content)[number]>;
   display: PropDef<(typeof display)[number]>;
@@ -83,6 +84,7 @@ export interface BoxDefs extends PaddingDefs, MarginDefs {
 
 export const boxDefs: BoxDefs = {
   ...paddingDefs,
+  ...positionDefs,
   ...marginDefs,
   content: {
     type: "enum",

@@ -8,7 +8,7 @@ import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
 
 import {
-  withBoxDefs,
+  withBoxProps,
   extractBoxProps,
   type BoxProps as LayoutProps,
 } from "src/definitions";
@@ -26,7 +26,7 @@ const Box = forwardRef<BoxElement, BoxProps>((props, ref) => {
     <Element
       {...rest}
       ref={ref}
-      className={clsx(rest.className, withBoxDefs(layoutProps))}
+      className={clsx(rest.className, withBoxProps(layoutProps))}
     />
   );
 });

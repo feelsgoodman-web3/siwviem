@@ -19,7 +19,7 @@ export default function withBreakpoints<T>(
   value?: Responsive<T>
 ) {
   if (typeof value === "undefined") return;
-  const prefix = `fs-${initialPrefix}`;
+  const prefix = initialPrefix ? `fs-${initialPrefix}` : "fs";
   if (typeof value === "string" || typeof value === "number") {
     return `${prefix}-${value}`;
   }
