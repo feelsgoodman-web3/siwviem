@@ -1,0 +1,39 @@
+{
+  "name": "fs-docs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "devDependencies": {
+    "@feelsgoodman/eslint-config-custom": "workspace:*",
+    "@feelsgoodman/typescript-config": "workspace:*",
+    "@types/mdx": "2.0.3",
+    "@types/node": "20.6.2",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "eslint": "8.49.0",
+    "postcss": "8.4.29",
+    "postcss-import": "^15.1.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "@feelsgoodman/frogspawn": "workspace:0.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
+    "@next/mdx": "^13.5.2",
+    "clsx": "^2.0.0",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}

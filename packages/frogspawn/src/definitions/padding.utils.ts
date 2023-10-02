@@ -1,6 +1,6 @@
 import { paddingDefs } from "./padding.props";
 import { GetPropDefTypes } from "./types";
-import withBreakpoints from "../utils/withBreakpoints";
+import { withBreakpoints } from "../utils";
 
 export type PaddingProps = GetPropDefTypes<typeof paddingDefs>;
 

@@ -12,6 +12,9 @@
     "clean": {
       "cache": false
     },
+    "dev": {
+      "outputs": []
+    },
     "lint": {
       "dependsOn": ["^build"],
       "outputs": []

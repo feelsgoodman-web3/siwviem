@@ -1,5 +1,6 @@
-import { PropDef } from "src/definitions/types";
-import { marginDefs, MarginDefs } from "src/definitions/margin.props";
+import { PropDef } from "./types";
+import { marginDefs, MarginDefs } from "./margin.props";
+import { makeSafeList } from "../utils";
 
 export const size = [
   "xs",
@@ -46,3 +47,9 @@ export const typographyDefs = {
   },
   highContrast: { type: "boolean", default: false },
 } satisfies TypographyDefs;
+
+export const typographySafeList = [
+  makeSafeList("text", size),
+  makeSafeList("font", weight),
+  makeSafeList("text", alignValues),
+];

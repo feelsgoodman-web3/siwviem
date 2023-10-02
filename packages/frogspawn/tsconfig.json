@@ -2,9 +2,6 @@
   "extends": "@feelsgoodman/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "paths": {
-      "src/*": ["./src/*"]
-    }
   },
   "exclude": ["node_modules"],
   "include": ["src", "./package.json", "*.config.ts"]

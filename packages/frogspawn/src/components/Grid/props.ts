@@ -1,4 +1,4 @@
-import type { PropDef } from "src/definitions/types";
+import type { PropDef } from "../../definitions/types";
 
 const cols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "none"] as const;
 const rows = [1, 2, 3, 4, 5, 6, "none"] as const;

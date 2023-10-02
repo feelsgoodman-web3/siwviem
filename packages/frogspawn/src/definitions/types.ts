@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-import type { Responsive } from "src/utils";
-import { ComponentPropsWithRef, ElementType } from "react";
+import type { ReactNode, ComponentPropsWithRef, ElementType } from "react";
+
+import type { Responsive } from "../utils";
 
 type BooleanPropDef = {
   type: "boolean";
@@ -60,7 +60,7 @@ type GetPropDefTypes<P> = {
 
 type PropsWithoutRefOrColor<T extends ElementType> = Omit<
   ComponentPropsWithRef<T>,
-  "color"
+  "color" | "content"
 >;
 
 export type { PropDef, GetPropDefTypes, PropsWithoutRefOrColor };

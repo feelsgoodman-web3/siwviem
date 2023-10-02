@@ -1,5 +1,7 @@
-import { SPACING_SCALE } from "src/constants";
-import { PropDef } from "src/definitions/types";
+import { SPACING_SCALE } from "../constants";
+
+import { PropDef } from "./types";
+import { makeSafeList } from "../utils";
 
 export const m = [...SPACING_SCALE, "auto"] as const;
 export const mx = m;
@@ -34,3 +36,15 @@ export const marginDefs: MarginDefs = {
   mx: { type: "enum", values: mx, default: undefined, responsive: true },
   my: { type: "enum", values: my, default: undefined, responsive: true },
 };
+
+export const marginSafeList = [
+  makeSafeList("m", m),
+  makeSafeList("mb", mb),
+  makeSafeList("me", me),
+  makeSafeList("ml", ml),
+  makeSafeList("mr", mr),
+  makeSafeList("ms", ms),
+  makeSafeList("mt", mt),
+  makeSafeList("mx", mx),
+  makeSafeList("my", my),
+];

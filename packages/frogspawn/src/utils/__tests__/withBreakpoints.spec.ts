@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import withBreakpoints from "../withBreakpoints";
-import { FlexProps } from "src/components/Flex";
+import { type FlexProps } from "../../components";
 describe("withBreakpoints", () => {
   it("should return a string", () => {
     const px: FlexProps["px"] = {

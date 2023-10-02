@@ -1,14 +1,17 @@
 import { type ElementRef, forwardRef } from "react";
+
+import clsx from "clsx";
+import { Slot } from "@radix-ui/react-slot";
+
 import {
   extractMarginProps,
   extractTypographyProps,
   TypographyProps,
   withMarginProps,
   withTypographyProps,
-} from "src/definitions";
-import { Slot } from "@radix-ui/react-slot";
-import clsx from "clsx";
-import type { PropsWithoutRefOrColor } from "src/definitions/types";
+  textColorVariants,
+} from "../../definitions";
+import type { PropsWithoutRefOrColor } from "../../definitions/types";
 
 type TextElement = ElementRef<"span">;
 type TextAsChildProps = {
@@ -24,7 +27,9 @@ type TextDivProps = {
   as?: "div";
   asChild?: never;
 } & PropsWithoutRefOrColor<"div">;
+
 type TextPProps = { as?: "p"; asChild?: never } & PropsWithoutRefOrColor<"p">;
+
 export type TextProps = TypographyProps &
   (TextAsChildProps | TextSpanProps | TextDivProps | TextPProps);
 
@@ -36,6 +41,7 @@ const Text = forwardRef<TextElement, TextProps>((props, ref) => {
     className,
     asChild,
     as: Tag = "span",
+    color,
     ...rest
   } = extractTypographyProps(marginRest);
 
@@ -45,6 +51,7 @@ const Text = forwardRef<TextElement, TextProps>((props, ref) => {
       ref={ref}
       className={clsx(
         className,
+        textColorVariants({ color }),
         withMarginProps(marginProps),
         withTypographyProps(typographyProps)
       )}

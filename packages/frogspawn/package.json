@@ -14,8 +14,25 @@
   "files": [
     "/dist"
   ],
+  "exports": {
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "default": "./dist/components/index.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin/index.d.ts",
+      "default": "./dist/plugin/index.js"
+    },
+    "./context": {
+      "types": "./dist/context/theme/index.d.ts",
+      "default": "./dist/context/theme/index.js"
+    },
+    "./styles": "./dist/styles/index.css"
+  },
   "scripts": {
-    "build": "tsup src/index.ts",
+    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/index.css",
+    "build": "tsup --onSuccess 'pnpm run build:css'",
+    "dev": "tsup --watch --onSuccess 'pnpm run build:css'",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "lint": "eslint \"src/**/*.ts*\"",
     "test": "vitest",
@@ -28,8 +45,8 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/node": "^20.4.5",
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.3",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
     "eslint": "^8.15.0",
@@ -56,6 +73,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0"
   }
 }

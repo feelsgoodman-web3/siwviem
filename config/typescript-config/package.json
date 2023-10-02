@@ -4,11 +4,13 @@
   "exports": {
     "./base.json": "./base.json",
     "./cjs.json": "./cjs.json",
+    "./next.json": "./next.json",
     "./react-library.json": "./react-library.json"
   },
   "files": [
     "./base.json",
     "./cjs.json",
+    "./next.json",
     "./react-library.json"
   ],
   "publishConfig": {

@@ -1,5 +1,7 @@
-import { SPACING_SCALE } from "src/constants";
-import { PropDef } from "src/definitions/types";
+import { SPACING_SCALE } from "../constants";
+
+import { PropDef } from "./types";
+import { makeSafeList } from "../utils";
 
 export const p = SPACING_SCALE;
 export const pb = p;
@@ -34,3 +36,15 @@ export const paddingDefs: PaddingDefs = {
   px: { type: "enum", values: px, default: undefined, responsive: true },
   py: { type: "enum", values: py, default: undefined, responsive: true },
 };
+
+export const paddingSafeList = [
+  makeSafeList("p", p),
+  makeSafeList("pb", pb),
+  makeSafeList("pe", pe),
+  makeSafeList("pl", pl),
+  makeSafeList("pr", pr),
+  makeSafeList("ps", ps),
+  makeSafeList("pt", pt),
+  makeSafeList("px", px),
+  makeSafeList("py", py),
+];

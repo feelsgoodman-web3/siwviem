@@ -1,6 +1,7 @@
-import { GetPropDefTypes } from "src/definitions/types";
-import { positionDefs } from "src/definitions/position.props";
-import { withBreakpoints } from "src/utils";
+import { withBreakpoints } from "../utils";
+
+import { GetPropDefTypes } from "./types";
+import { positionDefs } from "./position.props";
 
 export type PositionProps = GetPropDefTypes<typeof positionDefs>;
 

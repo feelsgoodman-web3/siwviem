@@ -1,8 +1,10 @@
-import { SPACING_SCALE } from "src/constants";
-import { PropDef } from "src/definitions/types";
-import { paddingDefs, PaddingDefs } from "src/definitions/padding.props";
-import { marginDefs, MarginDefs } from "src/definitions/margin.props";
-import { positionDefs, PositionDefs } from "src/definitions/position.props";
+import { SPACING_SCALE } from "../constants";
+import { makeSafeList } from "../utils";
+
+import { paddingDefs, PaddingDefs } from "./padding.props";
+import { marginDefs, MarginDefs } from "./margin.props";
+import { positionDefs, PositionDefs } from "./position.props";
+import { PropDef } from "./types";
 
 const alignSelf = ["auto", "center", "end", "start", "stretch"] as const;
 
@@ -145,3 +147,19 @@ export const boxDefs: BoxDefs = {
     responsive: true,
   },
 };
+
+export const boxSafeList = [
+  makeSafeList("self", alignSelf),
+  makeSafeList("content", content),
+  makeSafeList("", display),
+  makeSafeList("gap", gap),
+  makeSafeList("gap-x", gapX),
+  makeSafeList("gap-y", gapY),
+  makeSafeList("items", items),
+  makeSafeList("justify", justify),
+  makeSafeList("justify-items", justifyItems),
+  makeSafeList("justify-self", justifySelf),
+  makeSafeList("place-content", placeContent),
+  makeSafeList("space-x", spaceX),
+  makeSafeList("space-y", spaceY),
+];

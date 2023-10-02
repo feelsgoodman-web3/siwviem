@@ -1,8 +1,4 @@
-import {
-  type ComponentPropsWithoutRef,
-  type ElementRef,
-  forwardRef,
-} from "react";
+import { type ElementRef, forwardRef } from "react";
 
 import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
@@ -11,11 +7,12 @@ import {
   withBoxProps,
   extractBoxProps,
   type BoxProps as LayoutProps,
-} from "src/definitions";
+} from "../../definitions";
+import type { PropsWithoutRefOrColor } from "../../definitions/types";
 
 type BoxElement = ElementRef<"div">;
 
-export interface BoxProps extends ComponentPropsWithoutRef<"div">, LayoutProps {
+export interface BoxProps extends PropsWithoutRefOrColor<"div">, LayoutProps {
   asChild?: boolean;
 }
 

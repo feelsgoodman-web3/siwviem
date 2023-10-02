@@ -1,14 +1,13 @@
-import {
-  type ComponentPropsWithoutRef,
-  type ElementRef,
-  forwardRef,
-} from "react";
+import { type ElementRef, forwardRef } from "react";
 
 import clsx from "clsx";
 
-import { Box, type BoxProps } from "src/components/Box";
-import type { GetPropDefTypes } from "src/definitions/types";
-import { withBreakpoints } from "src/utils";
+import { Box, type BoxProps } from "../Box";
+import type {
+  GetPropDefTypes,
+  PropsWithoutRefOrColor,
+} from "../../definitions/types";
+import { withBreakpoints } from "../../utils";
 
 import { gridPropDefs } from "./props";
 
@@ -16,7 +15,7 @@ type GridElement = ElementRef<"div">;
 type GridOwnProps = GetPropDefTypes<typeof gridPropDefs>;
 
 export interface GridProps
-  extends ComponentPropsWithoutRef<"div">,
+  extends PropsWithoutRefOrColor<"div">,
     GridOwnProps,
     BoxProps {
   asChild?: boolean;

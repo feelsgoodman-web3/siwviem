@@ -1,7 +1,7 @@
 import { type ElementRef, forwardRef } from "react";
-import { type TypographyProps } from "src/definitions";
-import type { PropsWithoutRefOrColor } from "src/definitions/types";
-import { Text } from "src/components/Text";
+import { type TypographyProps } from "../../definitions";
+import type { PropsWithoutRefOrColor } from "../../definitions/types";
+import { Text } from "../Text";
 
 type HeadingElement = ElementRef<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
 type HeadingAsChildProps = {

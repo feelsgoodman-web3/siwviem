@@ -1,6 +1,7 @@
+import { withBreakpoints } from "../utils";
+
 import { marginDefs } from "./margin.props";
 import { GetPropDefTypes } from "./types";
-import withBreakpoints from "../utils/withBreakpoints";
 
 export type MarginProps = GetPropDefTypes<typeof marginDefs>;
 

@@ -1,19 +1,10 @@
-import { boxDefs } from "src/definitions/box.props";
-import { type GetPropDefTypes } from "src/definitions/types";
+import { withBreakpoints } from "../utils";
 
-import { withBreakpoints } from "src/utils";
-import {
-  extractPaddingProps,
-  withPaddingProps,
-} from "src/definitions/padding.utils";
-import {
-  extractMarginProps,
-  withMarginProps,
-} from "src/definitions/margin.utils";
-import {
-  extractPositionProps,
-  withPositionProps,
-} from "src/definitions/position.utils";
+import { boxDefs } from "./box.props";
+import { type GetPropDefTypes } from "./types";
+import { extractPaddingProps, withPaddingProps } from "./padding.utils";
+import { extractMarginProps, withMarginProps } from "./margin.utils";
+import { extractPositionProps, withPositionProps } from "./position.utils";
 
 export type BoxProps = GetPropDefTypes<typeof boxDefs>;
 export function extractBoxProps<T extends BoxProps>(props: T) {
@@ -65,7 +56,7 @@ export function withBoxProps<T extends BoxProps>(props: T): string {
     withPositionProps(props),
     withBreakpoints("self", props.alignSelf),
     withBreakpoints("content", props.content),
-    withBreakpoints("display", props.display),
+    withBreakpoints("", props.display),
     withBreakpoints("gap", props.gap),
     withBreakpoints("gap-x", props.gapX),
     withBreakpoints("gap-y", props.gapY),

@@ -1,5 +1,7 @@
-import { SPACING_SCALE } from "src/constants";
-import { PropDef } from "src/definitions/types";
+import { SPACING_SCALE } from "../constants";
+
+import { PropDef } from "./types";
+import { makeSafeList } from "../utils";
 
 const insert = [
   ...SPACING_SCALE,
@@ -69,3 +71,16 @@ export const positionDefs: PositionDefs = {
   left: { type: "enum", values: left, default: undefined, responsive: true },
   right: { type: "enum", values: right, default: undefined, responsive: true },
 };
+
+export const positionSafeList = [
+  makeSafeList("", position),
+  makeSafeList("top", top),
+  makeSafeList("bottom", bottom),
+  makeSafeList("left", left),
+  makeSafeList("right", right),
+  makeSafeList("inset-x", insetX),
+  makeSafeList("inset-y", insetY),
+  makeSafeList("inset", insert),
+  makeSafeList("start", start),
+  makeSafeList("end", end),
+];
