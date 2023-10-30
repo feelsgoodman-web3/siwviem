@@ -1,12 +1,12 @@
-import { withBreakpoints } from "../utils";
+import { withBreakpoints } from "../utils"
 
-import { GetPropDefTypes } from "./types";
-import { typographyDefs } from "./typography.props";
-import { extractMarginProps, withMarginProps } from "./margin.utils";
-import { cva, VariantProps } from "class-variance-authority";
+import { VariantProps, cva } from "class-variance-authority"
+import { extractMarginProps, withMarginProps } from "./margin.utils"
+import { GetPropDefTypes } from "./types"
+import { typographyDefs } from "./typography.props"
 
 export type TypographyProps = VariantProps<typeof textColorVariants> &
-  GetPropDefTypes<typeof typographyDefs>;
+  GetPropDefTypes<typeof typographyDefs>
 
 export const textColorVariants = cva("", {
   variants: {
@@ -26,16 +26,16 @@ export const textColorVariants = cva("", {
   defaultVariants: {
     color: "default",
   },
-});
+})
 
 export function extractTypographyProps<T extends TypographyProps>(props: T) {
-  const { marginProps, ...marginRest } = extractMarginProps(props);
+  const { marginProps, ...marginRest } = extractMarginProps(props)
   const {
     size = typographyDefs.size.default,
     weight = typographyDefs.weight.default,
     align = typographyDefs.align.default,
     ...rest
-  } = marginRest;
+  } = marginRest
   return {
     typographyProps: {
       ...marginProps,
@@ -44,10 +44,10 @@ export function extractTypographyProps<T extends TypographyProps>(props: T) {
       align,
     },
     ...rest,
-  };
+  }
 }
 export function withTypographyProps<T extends TypographyProps>(
-  props: T
+  props: T,
 ): string {
   return [
     withMarginProps(props),
@@ -56,5 +56,5 @@ export function withTypographyProps<T extends TypographyProps>(
     withBreakpoints("text", props.align),
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(" ")
 }

@@ -1,9 +1,8 @@
-import { SPACING_SCALE } from "../constants";
+import { SPACING_SCALE } from "@feelsgoodman/fs-plugin"
 
-import { PropDef } from "./types";
-import { makeSafeList } from "../utils";
+import { PropDef } from "./types"
 
-const insert = [
+export const insert = [
   ...SPACING_SCALE,
   "full",
   "auto",
@@ -13,30 +12,36 @@ const insert = [
   "1/4",
   "2/4",
   "3/4",
-] as const;
+] as const
 
-const insetX = insert;
-const insetY = insert;
-const start = insert;
-const end = insert;
-const top = insert;
-const bottom = insert;
-const left = insert;
-const right = insert;
+export const insetX = insert
+export const insetY = insert
+export const start = insert
+export const end = insert
+export const top = insert
+export const bottom = insert
+export const left = insert
+export const right = insert
 
-const position = ["static", "relative", "absolute", "fixed", "sticky"] as const;
+export const position = [
+  "static",
+  "relative",
+  "absolute",
+  "fixed",
+  "sticky",
+] as const
 
 export interface PositionDefs {
-  position: PropDef<(typeof position)[number]>;
-  inset: PropDef<(typeof insetX)[number]>;
-  insetX: PropDef<(typeof insetX)[number]>;
-  insetY: PropDef<(typeof insetY)[number]>;
-  start: PropDef<(typeof start)[number]>;
-  end: PropDef<(typeof end)[number]>;
-  top: PropDef<(typeof top)[number]>;
-  bottom: PropDef<(typeof bottom)[number]>;
-  left: PropDef<(typeof left)[number]>;
-  right: PropDef<(typeof right)[number]>;
+  position: PropDef<typeof position[number]>
+  inset: PropDef<typeof insetX[number]>
+  insetX: PropDef<typeof insetX[number]>
+  insetY: PropDef<typeof insetY[number]>
+  start: PropDef<typeof start[number]>
+  end: PropDef<typeof end[number]>
+  top: PropDef<typeof top[number]>
+  bottom: PropDef<typeof bottom[number]>
+  left: PropDef<typeof left[number]>
+  right: PropDef<typeof right[number]>
 }
 
 export const positionDefs: PositionDefs = {
@@ -70,17 +75,4 @@ export const positionDefs: PositionDefs = {
   },
   left: { type: "enum", values: left, default: undefined, responsive: true },
   right: { type: "enum", values: right, default: undefined, responsive: true },
-};
-
-export const positionSafeList = [
-  makeSafeList("", position),
-  makeSafeList("top", top),
-  makeSafeList("bottom", bottom),
-  makeSafeList("left", left),
-  makeSafeList("right", right),
-  makeSafeList("inset-x", insetX),
-  makeSafeList("inset-y", insetY),
-  makeSafeList("inset", insert),
-  makeSafeList("start", start),
-  makeSafeList("end", end),
-];
+}

@@ -1,40 +1,40 @@
-import { type ElementRef, forwardRef } from "react";
+import { type ElementRef, forwardRef } from "react"
 
-import clsx from "clsx";
-import { Slot } from "@radix-ui/react-slot";
+import { Slot } from "@radix-ui/react-slot"
+import clsx from "clsx"
 
 import {
+  TypographyProps,
   extractMarginProps,
   extractTypographyProps,
-  TypographyProps,
+  textColorVariants,
   withMarginProps,
   withTypographyProps,
-  textColorVariants,
-} from "../../definitions";
-import type { PropsWithoutRefOrColor } from "../../definitions/types";
+} from "../../definitions"
+import type { PropsWithoutRefOrColor } from "../../definitions/types"
 
-type TextElement = ElementRef<"span">;
+type TextElement = ElementRef<"span">
 type TextAsChildProps = {
-  asChild?: boolean;
-  as?: never;
-} & PropsWithoutRefOrColor<"span">;
+  asChild?: boolean
+  as?: never
+} & PropsWithoutRefOrColor<"span">
 
 type TextSpanProps = {
-  as?: "span";
-  asChild?: never;
-} & PropsWithoutRefOrColor<"span">;
+  as?: "span"
+  asChild?: never
+} & PropsWithoutRefOrColor<"span">
 type TextDivProps = {
-  as?: "div";
-  asChild?: never;
-} & PropsWithoutRefOrColor<"div">;
+  as?: "div"
+  asChild?: never
+} & PropsWithoutRefOrColor<"div">
 
-type TextPProps = { as?: "p"; asChild?: never } & PropsWithoutRefOrColor<"p">;
+type TextPProps = { as?: "p"; asChild?: never } & PropsWithoutRefOrColor<"p">
 
 export type TextProps = TypographyProps &
-  (TextAsChildProps | TextSpanProps | TextDivProps | TextPProps);
+  (TextAsChildProps | TextSpanProps | TextDivProps | TextPProps)
 
 const Text = forwardRef<TextElement, TextProps>((props, ref) => {
-  const { marginProps, ...marginRest } = extractMarginProps(props);
+  const { marginProps, ...marginRest } = extractMarginProps(props)
   const {
     typographyProps,
     children,
@@ -43,7 +43,7 @@ const Text = forwardRef<TextElement, TextProps>((props, ref) => {
     as: Tag = "span",
     color,
     ...rest
-  } = extractTypographyProps(marginRest);
+  } = extractTypographyProps(marginRest)
 
   return (
     <Slot
@@ -53,14 +53,14 @@ const Text = forwardRef<TextElement, TextProps>((props, ref) => {
         className,
         textColorVariants({ color }),
         withMarginProps(marginProps),
-        withTypographyProps(typographyProps)
+        withTypographyProps(typographyProps),
       )}
     >
       {asChild ? children : <Tag>{children}</Tag>}
     </Slot>
-  );
-});
+  )
+})
 
-Text.displayName = "Text";
+Text.displayName = "Text"
 
-export default Text;
+export default Text

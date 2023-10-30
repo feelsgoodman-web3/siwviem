@@ -1,8 +1,8 @@
-import { ComponentPropsWithRef, ReactNode } from "react";
-import { Text } from "@feelsgoodman/frogspawn/components";
+import { Text } from "@feelsgoodman/fs-ui/components"
+import { ComponentPropsWithRef, ReactNode } from "react"
 
 interface PProps extends Omit<ComponentPropsWithRef<"p">, "color"> {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function P({ children, ...props }: PProps) {
@@ -10,5 +10,5 @@ export default function P({ children, ...props }: PProps) {
     <Text {...props} mb={3} as="p">
       {children}
     </Text>
-  );
+  )
 }

@@ -1,8 +1,16 @@
 {
-  "extends": "@feelsgoodman/typescript-config/cjs.json",
+  "extends": ["@tsconfig/strictest/tsconfig", "@tsconfig/node18/tsconfig"],
+  "include": ["src", "package.json", "*.config.ts"],
+  "exclude": ["node_modules", "dist", ".turbo"],
   "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "exclude": ["node_modules"],
-  "include": ["src", "./package.json", "*.config.ts"]
+    "outDir": "./dist",
+    "lib": ["ESNext", "DOM"],
+    "module": "ES2020",
+    "moduleResolution": "Bundler",
+    "target": "ESNext",
+    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+    "exactOptionalPropertyTypes": false
+  }
 }

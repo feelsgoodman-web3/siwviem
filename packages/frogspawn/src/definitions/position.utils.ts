@@ -1,9 +1,9 @@
-import { withBreakpoints } from "../utils";
+import { withBreakpoints } from "../utils"
 
-import { GetPropDefTypes } from "./types";
-import { positionDefs } from "./position.props";
+import { positionDefs } from "./position.props"
+import { GetPropDefTypes } from "./types"
 
-export type PositionProps = GetPropDefTypes<typeof positionDefs>;
+export type PositionProps = GetPropDefTypes<typeof positionDefs>
 
 export function extractPositionProps<T extends PositionProps>(props: T) {
   const {
@@ -18,7 +18,7 @@ export function extractPositionProps<T extends PositionProps>(props: T) {
     start = positionDefs.start.default,
     end = positionDefs.end.default,
     ...rest
-  } = props;
+  } = props
   return {
     positionProps: {
       position,
@@ -33,7 +33,7 @@ export function extractPositionProps<T extends PositionProps>(props: T) {
       end,
     },
     ...rest,
-  };
+  }
 }
 
 export function withPositionProps<T extends PositionProps>(props: T): string {
@@ -50,5 +50,5 @@ export function withPositionProps<T extends PositionProps>(props: T): string {
     withBreakpoints("end", props.end),
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(" ")
 }

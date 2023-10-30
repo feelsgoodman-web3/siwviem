@@ -1,5 +1,5 @@
-export type Breakpoints = "sm" | "md" | "lg" | "xl" | "2xl" | "initial";
-export type Responsive<T> = T | Partial<Record<Breakpoints, T>>;
+export type Breakpoints = "sm" | "md" | "lg" | "xl" | "2xl" | "initial"
+export type Responsive<T> = T | Partial<Record<Breakpoints, T>>
 
 /**
  * A helper to generate CSS classes that include breakpoints.
@@ -16,20 +16,22 @@ export type Responsive<T> = T | Partial<Record<Breakpoints, T>>;
  */
 export default function withBreakpoints<T>(
   initialPrefix: string,
-  value?: Responsive<T>
+  value?: Responsive<T>,
 ) {
-  if (typeof value === "undefined") return;
-  const prefix = initialPrefix ? `fs-${initialPrefix}` : "fs";
+  if (typeof value === "undefined") return
+  const prefix = initialPrefix ? `fs-${initialPrefix}` : "fs"
   if (typeof value === "string" || typeof value === "number") {
-    return `${prefix}-${value}`;
+    return `${prefix}-${value}`
   }
 
   if (value && typeof value === "object") {
     return Object.entries(value)
       .map(([breakpoint, val]) => {
-        const bpPrefix = breakpoint === "initial" ? "" : `${breakpoint}:`;
-        return `${bpPrefix}${prefix}-${val}`;
+        const bpPrefix = breakpoint === "initial" ? "" : `${breakpoint}:`
+        return `${bpPrefix}${prefix}-${val}`
       })
-      .join(" ");
+      .join(" ")
   }
+
+  return
 }

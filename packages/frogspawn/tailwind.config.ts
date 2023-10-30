@@ -1,10 +1,8 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
-import plugin from "./src/plugin";
+import { plugin } from "./src/plugin"
+
 export default {
-  content: [
-    "./src/components/*/*!(spec).ts?(x)",
-    "./src/definitions/*/*!(spec).ts?(x)",
-  ],
+  content: ["./dist/classes/*.js"],
   plugins: [plugin],
-} satisfies Config;
+} satisfies Config

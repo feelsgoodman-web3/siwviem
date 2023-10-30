@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import withBreakpoints from "../withBreakpoints";
-import { type FlexProps } from "../../components";
+import { describe, expect, it } from "vitest"
+import { type FlexProps } from "../../components"
+import withBreakpoints from "../withBreakpoints"
 describe("withBreakpoints", () => {
   it("should return a string", () => {
     const px: FlexProps["px"] = {
@@ -10,9 +10,9 @@ describe("withBreakpoints", () => {
       lg: 4,
       xl: 5,
       "2xl": 6,
-    };
+    }
     expect(withBreakpoints("p", px)).toBe(
-      "fs-p-1 sm:fs-p-2 md:fs-p-3 lg:fs-p-4 xl:fs-p-5 2xl:fs-p-6"
-    );
-  });
-});
+      "fs-p-1 sm:fs-p-2 md:fs-p-3 lg:fs-p-4 xl:fs-p-5 2xl:fs-p-6",
+    )
+  })
+})

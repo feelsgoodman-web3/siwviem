@@ -1,6 +1,6 @@
-import { cva } from "class-variance-authority";
+import { cvaWithBreakpoints } from "../../utils/cvaWithBreakpoints"
 
-const buttonVariants = cva(
+export const buttonBaseVariants = cvaWithBreakpoints(
   "fs-inline-flex fs-gap-2 fs-items-center fs-font-medium fs-justify-center fs-transition-colors focus-visible:fs-outline-none disabled:fs-pointer-events-none active:fs-brightness-110",
   {
     variants: {
@@ -11,19 +11,6 @@ const buttonVariants = cva(
         surface: "",
         ghost: "",
       },
-      radius: {
-        none: "",
-        default: "fs-rounded",
-        md: "fs-rounded-md",
-        lg: "fs-rounded-lg",
-        full: "fs-rounded-full",
-      },
-      size: {
-        default: "fs-px-3 fs-py-2 fs-text-sm",
-        small: "fs-px-3 fs-py-2 fs-text-xs fs-text-sm",
-        large: "fs-px-4 fs-py-3 fs-text-md",
-        xLarge: "fs-px-6 fs-py-3 fs-text-lg",
-      },
       color: {
         accent: "",
         blue: "",
@@ -33,6 +20,17 @@ const buttonVariants = cva(
         purple: "",
         red: "",
         yellow: "",
+      },
+      radius: {
+        none: "",
+        default: "fs-rounded",
+        md: "fs-rounded-md",
+        lg: "fs-rounded-lg",
+        full: "fs-rounded-full",
+      },
+      fullWidth: {
+        true: "fs-w-full",
+        false: "",
       },
     },
     compoundVariants: [
@@ -279,11 +277,25 @@ const buttonVariants = cva(
     ],
     defaultVariants: {
       variant: "solid",
-      size: "default",
       color: "accent",
       radius: "default",
+      fullWidth: false,
     },
-  }
-);
+  },
+)
 
-export default buttonVariants;
+const buttonVariants = cvaWithBreakpoints("fs-button", {
+  variants: {
+    size: {
+      default: "fs-px-3 fs-py-2 fs-text-sm",
+      small: "fs-px-3 fs-py-2 fs-text-xs fs-text-sm",
+      large: "fs-px-4 fs-py-3 fs-text-md",
+      xLarge: "fs-px-6 fs-py-3 fs-text-lg",
+    },
+  },
+  defaultVariants: {
+    size: "default",
+  },
+})
+
+export default buttonVariants

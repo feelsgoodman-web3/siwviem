@@ -1,1 +1,1 @@
-export { default as HeadingLink } from "./HeadingLink";
+export { default as HeadingLink } from "./HeadingLink"

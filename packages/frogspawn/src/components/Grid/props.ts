@@ -1,10 +1,10 @@
-import type { PropDef } from "../../definitions/types";
+import type { PropDef } from "../../definitions/types"
 
-const cols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "none"] as const;
-const rows = [1, 2, 3, 4, 5, 6, "none"] as const;
-const flow = ["row", "column", "row-dense", "col-dense"] as const;
-const autoCols = ["auto", "min", "max", "fr"] as const;
-const autoRows = autoCols;
+const cols = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "none"] as const
+const rows = [1, 2, 3, 4, 5, 6, "none"] as const
+const flow = ["row", "column", "row-dense", "col-dense"] as const
+const autoCols = ["auto", "min", "max", "fr"] as const
+const autoRows = autoCols
 export const gridPropDefs = {
   cols: {
     type: "enum",
@@ -27,9 +27,9 @@ export const gridPropDefs = {
     responsive: true,
   },
 } satisfies {
-  cols: PropDef<(typeof cols)[number]>;
-  rows: PropDef<(typeof rows)[number]>;
-  flow: PropDef<(typeof flow)[number]>;
-  autoRows: PropDef<(typeof autoRows)[number]>;
-  autoCols: PropDef<(typeof autoCols)[number]>;
-};
+  cols: PropDef<typeof cols[number]>
+  rows: PropDef<typeof rows[number]>
+  flow: PropDef<typeof flow[number]>
+  autoRows: PropDef<typeof autoRows[number]>
+  autoCols: PropDef<typeof autoCols[number]>
+}

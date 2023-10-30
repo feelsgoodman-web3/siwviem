@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { FlexProps } from "../../components";
-import { withMarginProps } from "../margin.utils";
+import { describe, expect, it } from "vitest"
+import { FlexProps } from "../../components"
+import { withMarginProps } from "../margin.utils"
 describe("withMarginProps", () => {
   it("should return a string", () => {
     const mx: FlexProps["mx"] = {
@@ -10,7 +10,7 @@ describe("withMarginProps", () => {
       lg: 4,
       xl: 5,
       "2xl": 6,
-    };
+    }
 
     const my: FlexProps["my"] = {
       initial: 1,
@@ -19,8 +19,8 @@ describe("withMarginProps", () => {
       lg: 4,
       xl: 5,
       "2xl": 6,
-    };
-    const items: FlexProps["items"] = "center";
+    }
+    const items: FlexProps["items"] = "center"
 
     const props = {
       mx,
@@ -28,10 +28,10 @@ describe("withMarginProps", () => {
       items,
       randomProp: "randomValue",
       my,
-    };
+    }
 
     expect(withMarginProps(props)).toBe(
-      "fs-ml-1 fs-mx-1 sm:fs-mx-2 md:fs-mx-3 lg:fs-mx-4 xl:fs-mx-5 2xl:fs-mx-6 fs-my-1 sm:fs-my-2 md:fs-my-3 lg:fs-my-4 xl:fs-my-5 2xl:fs-my-6"
-    );
-  });
-});
+      "fs-ml-1 fs-mx-1 sm:fs-mx-2 md:fs-mx-3 lg:fs-mx-4 xl:fs-mx-5 2xl:fs-mx-6 fs-my-1 sm:fs-my-2 md:fs-my-3 lg:fs-my-4 xl:fs-my-5 2xl:fs-my-6",
+    )
+  })
+})

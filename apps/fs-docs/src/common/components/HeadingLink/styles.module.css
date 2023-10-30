@@ -1,7 +1,3 @@
-.headingLink {
-  text-decoration-color: var(--gray-a5);
-}
-
 .headingLink svg {
   color: var(--gray-11);
   visibility: hidden;

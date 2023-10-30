@@ -1,0 +1,16 @@
+# Generated file. Do not edit directly.
+
+plugin/**
+components/**
+components/Anchor/**
+components/AppBar/**
+components/Box/**
+components/Button/**
+components/Code/**
+components/Flex/**
+components/Grid/**
+components/Heading/**
+components/IconButton/**
+components/ScrollArea/**
+components/Text/**
+styles/**

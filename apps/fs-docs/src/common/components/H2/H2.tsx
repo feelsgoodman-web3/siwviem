@@ -1,8 +1,8 @@
-import { HeadingLink } from "@fs/common/components/HeadingLink";
-import { ComponentPropsWithRef } from "react";
+import { HeadingLink } from "@fs/common/components/HeadingLink"
+import { ComponentPropsWithRef } from "react"
 
 interface H2Props extends ComponentPropsWithRef<"h2"> {
-  children: string;
+  children: string
 }
 
 export default function H2({ children, ...props }: H2Props) {
@@ -10,5 +10,5 @@ export default function H2({ children, ...props }: H2Props) {
     <HeadingLink {...props} as="h2" size="2xl">
       {children}
     </HeadingLink>
-  );
+  )
 }

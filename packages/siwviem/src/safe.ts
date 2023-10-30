@@ -1,15 +1,15 @@
 import {
   type Chain,
-  hashMessage,
   type PublicClient,
   type Transport,
-} from "viem";
-import type { ByteArray, Hex } from "viem/src/types/misc";
+  hashMessage,
+} from "viem"
+import type { ByteArray, Hex } from "viem/src/types/misc"
 
-import { SAFE_ABI } from "./abis";
-import { SiwViemMessage } from "./client";
-import { SAFE_TRANSACTION_URLS, SAFE_MAGICVALUE } from "./constants";
-import { TransactionServiceSafeMessage } from "./types";
+import { SAFE_ABI } from "./abis"
+import { SiwViemMessage } from "./client"
+import { SAFE_MAGICVALUE, SAFE_TRANSACTION_URLS } from "./constants"
+import { TransactionServiceSafeMessage } from "./types"
 
 /**
  * Fetches the SafeMessage corresponding to the given hash and chain ID.
@@ -19,14 +19,14 @@ import { TransactionServiceSafeMessage } from "./types";
  */
 export const fetchSafeMessage = async (
   safeMessageHash: string,
-  chainId: number
+  chainId: number,
 ): Promise<TransactionServiceSafeMessage> => {
-  const SAFE_TX_URL = SAFE_TRANSACTION_URLS[chainId];
+  const SAFE_TX_URL = SAFE_TRANSACTION_URLS[chainId]
 
   return fetch(`${SAFE_TX_URL}/v1/messages/${safeMessageHash}/`, {
     headers: { "Content-Type": "application/json" },
-  }).then(res => res.json());
-};
+  }).then((res) => res.json())
+}
 
 /**
  * Checks if a signature from a Safe wallet is valid for a given message.
@@ -37,11 +37,11 @@ export const fetchSafeMessage = async (
  */
 export const checkSafeWalletSignature = async (
   message: SiwViemMessage,
-  signature: Hex | ByteArray,
-  publicClient: PublicClient<Transport, Chain>
+  _signature: Hex | ByteArray,
+  publicClient: PublicClient<Transport, Chain>,
 ): Promise<boolean> => {
-  const { address, chainId } = message;
-  const hashedMessage = hashMessage(message.prepareMessage());
+  const { address, chainId } = message
+  const hashedMessage = hashMessage(message.prepareMessage())
 
   // Group the related contract reads
   const [threshold, safeHashMessage] = await Promise.all([
@@ -56,16 +56,16 @@ export const checkSafeWalletSignature = async (
       functionName: "getMessageHash",
       args: [hashedMessage],
     }),
-  ]);
+  ])
 
   const safeMessage = await fetchSafeMessage(
     safeHashMessage as string,
-    Number(chainId)
-  );
+    Number(chainId),
+  )
 
   // Check for sufficient confirmations
   if (!threshold || Number(threshold) > safeMessage.confirmations.length) {
-    return false;
+    return false
   }
 
   // Verify the validity of the signature
@@ -74,8 +74,8 @@ export const checkSafeWalletSignature = async (
     abi: SAFE_ABI,
     functionName: "isValidSignature",
     args: [hashedMessage, safeMessage.preparedSignature],
-  })) as string;
+  })) as string
 
   // Compare against the SAFE_MAGICVALUE constant
-  return SAFE_MAGICVALUE === validityCheckResult?.slice(0, 10).toLowerCase();
-};
+  return SAFE_MAGICVALUE === validityCheckResult?.slice(0, 10).toLowerCase()
+}

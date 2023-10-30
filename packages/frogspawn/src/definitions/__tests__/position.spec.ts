@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { PositionProps, withPositionProps } from "../position.utils";
+import { describe, expect, it } from "vitest"
+import { PositionProps, withPositionProps } from "../position.utils"
 describe("withTypographyProps", () => {
   it("should return a string", () => {
     const props: PositionProps & Record<string, any> = {
@@ -19,10 +19,10 @@ describe("withTypographyProps", () => {
       position: "relative",
       align: "center",
       randomProp: "randomValue",
-    };
+    }
 
     expect(withPositionProps(props)).toBe(
-      "fs-relative md:fs-top-0 fs-top-auto sm:fs-top-1/2 fs-bottom-2 fs-left-1 fs-right-3 fs-inset-x-4 fs-inset-y-5 fs-inset-6 fs-start-7 fs-end-8"
-    );
-  });
-});
+      "fs-relative md:fs-top-0 fs-top-auto sm:fs-top-1/2 fs-bottom-2 fs-left-1 fs-right-3 fs-inset-x-4 fs-inset-y-5 fs-inset-6 fs-start-7 fs-end-8",
+    )
+  })
+})

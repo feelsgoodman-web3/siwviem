@@ -1,16 +1,22 @@
-import { ButtonHTMLAttributes, forwardRef } from "react";
+import { type ButtonHTMLAttributes, forwardRef } from "react"
 
-import { Slot } from "@radix-ui/react-slot";
-import { VariantProps } from "class-variance-authority";
-import clsx from "clsx";
+import { Slot } from "@radix-ui/react-slot"
+import { type VariantProps } from "class-variance-authority"
+import clsx from "clsx"
 
-import buttonVariants from "./variants";
+import {
+  MarginProps,
+  extractMarginProps,
+  withMarginProps,
+} from "../../definitions"
+import buttonVariants, { buttonBaseVariants } from "./variants"
 
 export interface ButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color">,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-  fullWidth?: boolean;
+    VariantProps<typeof buttonVariants>,
+    VariantProps<typeof buttonBaseVariants>,
+    MarginProps {
+  asChild?: boolean
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -25,25 +31,27 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       fullWidth,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const Comp = asChild ? Slot : "button";
+    const Comp = asChild ? Slot : "button"
+    const { marginProps, ...rest } = extractMarginProps(props)
 
     return (
       <Comp
+        {...rest}
         className={clsx(
-          buttonVariants({ variant, size, className, color, radius }),
-          {
-            "fs-w-full": fullWidth,
-          }
+          "fs-Button",
+          className,
+          withMarginProps(marginProps),
+          buttonVariants({ size }),
+          buttonBaseVariants({ variant, color, radius, fullWidth }),
         )}
         ref={ref}
-        {...props}
       />
-    );
-  }
-);
+    )
+  },
+)
 
-Button.displayName = "Button";
+Button.displayName = "Button"
 
-export default Button;
+export default Button

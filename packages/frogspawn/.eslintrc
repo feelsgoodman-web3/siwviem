@@ -1,6 +1,0 @@
-{
-  "root": true,
-  "extends": [
-    "@feelsgoodman/eslint-config-custom/react"
-  ]
-}

@@ -1,2 +1,2 @@
-export { default as SiwViemAuth, useSiwViemAuth } from "./SiwViemAuth";
-export * from "./types";
+export { default as SiwViemAuth, useSiwViemAuth } from "./SiwViemAuth"
+export * from "./types"

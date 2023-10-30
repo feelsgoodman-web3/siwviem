@@ -1,6 +1,5 @@
-import { PropDef } from "./types";
-import { marginDefs, MarginDefs } from "./margin.props";
-import { makeSafeList } from "../utils";
+import { MarginDefs, marginDefs } from "./margin.props"
+import { PropDef } from "./types"
 
 export const size = [
   "xs",
@@ -12,7 +11,7 @@ export const size = [
   "3xl",
   "4xl",
   "5xl",
-] as const;
+] as const
 
 export const weight = [
   "thin",
@@ -24,15 +23,15 @@ export const weight = [
   "bold",
   "extrabold",
   "black",
-] as const;
+] as const
 
-const alignValues = ["left", "center", "right"] as const;
+export const alignValues = ["left", "center", "right"] as const
 
 export interface TypographyDefs extends MarginDefs {
-  size: PropDef<(typeof size)[number]>;
-  weight: PropDef<(typeof weight)[number]>;
-  align: PropDef<(typeof alignValues)[number]>;
-  highContrast: PropDef<boolean>;
+  size: PropDef<typeof size[number]>
+  weight: PropDef<typeof weight[number]>
+  align: PropDef<typeof alignValues[number]>
+  highContrast: PropDef<boolean>
 }
 
 export const typographyDefs = {
@@ -46,10 +45,4 @@ export const typographyDefs = {
     responsive: true,
   },
   highContrast: { type: "boolean", default: false },
-} satisfies TypographyDefs;
-
-export const typographySafeList = [
-  makeSafeList("text", size),
-  makeSafeList("font", weight),
-  makeSafeList("text", alignValues),
-];
+} satisfies TypographyDefs

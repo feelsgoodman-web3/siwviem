@@ -1,6 +1,6 @@
-import { defineConfig } from "@wagmi/cli";
-import { foundry } from "@wagmi/cli/plugins";
-import * as chains from "viem/chains";
+import { defineConfig } from "@wagmi/cli"
+import { foundry } from "@wagmi/cli/plugins"
+import * as chains from "viem/chains"
 export default defineConfig({
   out: "test/generated.ts",
   plugins: [
@@ -13,4 +13,4 @@ export default defineConfig({
       },
     }),
   ],
-});
+})

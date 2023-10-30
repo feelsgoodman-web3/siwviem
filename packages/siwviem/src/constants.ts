@@ -11,7 +11,7 @@ export const SAFE_TRANSACTION_URLS: Record<string, string> = {
   100: "https://safe-transaction-gnosis-chain.safe.global/api",
   10: "https://safe-transaction-optimism.safe.global/api",
   137: "https://safe-transaction-polygon.safe.global/api",
-};
+}
 
-export const SAFE_MAGICVALUE = "0x20c13b0b";
-export const EIP1271_MAGICVALUE = "0x1626ba7e";
+export const SAFE_MAGICVALUE = "0x20c13b0b"
+export const EIP1271_MAGICVALUE = "0x1626ba7e"

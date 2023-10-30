@@ -1,38 +1,38 @@
-import type { ReactNode, ComponentPropsWithRef, ElementType } from "react";
+import type { ComponentPropsWithRef, ElementType, ReactNode } from "react"
 
-import type { Responsive } from "../utils";
+import type { Responsive } from "../utils"
 
 type BooleanPropDef = {
-  type: "boolean";
-  default?: boolean;
-  required?: boolean;
-};
-type StringPropDef = { type: "string"; default?: string; required?: boolean };
+  type: "boolean"
+  default?: boolean
+  required?: boolean
+}
+type StringPropDef = { type: "string"; default?: string; required?: boolean }
 type StringOrNumberPropDef = {
-  type: "string | number";
-  default?: string | number;
-  required?: boolean;
-};
+  type: "string | number"
+  default?: string | number
+  required?: boolean
+}
 type ReactNodePropDef = {
-  type: "ReactNode";
-  default?: ReactNode;
-  required?: boolean;
-};
+  type: "ReactNode"
+  default?: ReactNode
+  required?: boolean
+}
 type EnumPropDef<T> = {
-  type: "enum";
-  values: readonly T[];
-  default?: T;
-  required?: boolean;
-};
+  type: "enum"
+  values: readonly T[]
+  default?: T
+  required?: boolean
+}
 
 type RegularPropDef<T> =
   | BooleanPropDef
   | StringPropDef
   | StringOrNumberPropDef
   | ReactNodePropDef
-  | EnumPropDef<T>;
-type ResponsivePropDef<T = any> = RegularPropDef<T> & { responsive: true };
-type PropDef<T = any> = RegularPropDef<T> | ResponsivePropDef<T>;
+  | EnumPropDef<T>
+type ResponsivePropDef<T = any> = RegularPropDef<T> & { responsive: true }
+type PropDef<T = any> = RegularPropDef<T> | ResponsivePropDef<T>
 
 type PropTypeFromDef<Def> = Def extends BooleanPropDef
   ? boolean
@@ -44,23 +44,23 @@ type PropTypeFromDef<Def> = Def extends BooleanPropDef
   ? ReactNode
   : Def extends EnumPropDef<infer Type>
   ? Type
-  : never;
+  : never
 
-type GetRegularPropDefType<Def> = PropTypeFromDef<Def>;
+type GetRegularPropDefType<Def> = PropTypeFromDef<Def>
 
-type GetResponsivePropDefType<Def> = Responsive<PropTypeFromDef<Def>>;
+type GetResponsivePropDefType<Def> = Responsive<PropTypeFromDef<Def>>
 
 type GetPropDefType<Def> = Def extends { responsive: true }
   ? GetResponsivePropDefType<Def>
-  : GetRegularPropDefType<Def>;
+  : GetRegularPropDefType<Def>
 
 type GetPropDefTypes<P> = {
-  [K in keyof P]?: GetPropDefType<P[K]>;
-};
+  [K in keyof P]?: GetPropDefType<P[K]>
+}
 
 type PropsWithoutRefOrColor<T extends ElementType> = Omit<
   ComponentPropsWithRef<T>,
   "color" | "content"
->;
+>
 
-export type { PropDef, GetPropDefTypes, PropsWithoutRefOrColor };
+export type { PropDef, GetPropDefTypes, PropsWithoutRefOrColor }

@@ -1,19 +1,25 @@
-import type { SiwViemMessage } from "./client";
-import type { Chain, PublicClient, Transport, TypedData } from "viem";
-import type { ByteArray, Hex } from "viem/src/types/misc";
+import type {
+  ByteArray,
+  Chain,
+  Hex,
+  PublicClient,
+  Transport,
+  TypedData,
+} from "viem"
+import type { SiwViemMessage } from "./client"
 
 export interface VerifyParams {
   /** Signature of the message signed by the wallet */
-  signature: Hex | ByteArray;
+  signature: Hex | ByteArray
 
   /** RFC 4501 dns authority that is requesting the signing. */
-  domain?: string;
+  domain?: string
 
   /** Randomized token used to prevent replay attacks, at least 8 alphanumeric characters. */
-  nonce?: string;
+  nonce?: string
 
   /**ISO 8601 datetime string of the current time. */
-  time?: string;
+  time?: string
 }
 
 export const VerifyParamsKeys: Array<keyof VerifyParams> = [
@@ -21,42 +27,42 @@ export const VerifyParamsKeys: Array<keyof VerifyParams> = [
   "domain",
   "nonce",
   "time",
-];
+]
 
 export interface VerifyOpts {
   /** ethers provider to be used for EIP-1271 validation */
-  publicClient?: PublicClient<Transport, Chain>;
+  publicClient?: PublicClient<Transport, Chain>
 
   /** If the library should reject promises on errors, defaults to false */
-  suppressExceptions?: boolean;
+  suppressExceptions?: boolean
 
   /** Enables a custom verification function that will be ran alongside EIP-1271 check. */
   verificationFallback?: (
     params: VerifyParams,
     opts: VerifyOpts,
     message: SiwViemMessage,
-    EIP1271Promise: Promise<SiwViemResponse>
-  ) => Promise<SiwViemResponse>;
+    EIP1271Promise: Promise<SiwViemResponse>,
+  ) => Promise<SiwViemResponse>
 }
 
 export const VerifyOptsKeys: Array<keyof VerifyOpts> = [
   "publicClient",
   "suppressExceptions",
   "verificationFallback",
-];
+]
 
 /**
  * Returned on verifications.
  */
 export interface SiwViemResponse {
   /** Boolean representing if the message was verified with success. */
-  success: boolean;
+  success: boolean
 
   /** If present `success` MUST be false and will provide extra information on the failure reason. */
-  error?: SiwViemError;
+  error?: SiwViemError
 
   /** Original message that was verified. */
-  data: SiwViemMessage;
+  data: SiwViemMessage
 }
 
 /**
@@ -66,21 +72,21 @@ export class SiwViemError {
   constructor(
     type: SiwViemErrorType | string,
     expected?: string,
-    received?: string
+    received?: string,
   ) {
-    this.type = type;
-    this.expected = expected;
-    this.received = received;
+    this.type = type
+    this.expected = expected
+    this.received = received
   }
 
   /** Type of the error. */
-  type: SiwViemErrorType | string;
+  type: SiwViemErrorType | string
 
   /** Expected value or condition to pass. */
-  expected?: string;
+  expected?: string
 
   /** Received value that caused the failure. */
-  received?: string;
+  received?: string
 }
 
 /**
@@ -132,18 +138,18 @@ enum SignatureType {
 }
 
 export interface TransactionServiceSafeMessage {
-  created: string;
-  modified: string;
-  messageHash: string;
-  message: string | TypedData;
-  proposedBy: string; // Address of the owner that proposed the message
-  safeAppId: number | null;
+  created: string
+  modified: string
+  messageHash: string
+  message: string | TypedData
+  proposedBy: string // Address of the owner that proposed the message
+  safeAppId: number | null
   confirmations: {
-    created: string;
-    modified: string;
-    owner: string;
-    signature: string;
-    signatureType: SignatureType;
-  }[];
-  preparedSignature: string; // Will be continuously updated by service, but only valid until threshold met
+    created: string
+    modified: string
+    owner: string
+    signature: string
+    signatureType: SignatureType
+  }[]
+  preparedSignature: string // Will be continuously updated by service, but only valid until threshold met
 }

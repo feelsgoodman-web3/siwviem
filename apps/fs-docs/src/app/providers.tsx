@@ -1,22 +1,17 @@
-"use client";
+"use client"
 
-import type { ReactNode } from "react";
-import { ThemeProvider } from "@feelsgoodman/frogspawn/context";
-import { H1 } from "@fs/common/components/H1";
-import { MDXProvider } from "@mdx-js/react";
+import { H1 } from "@fs/common/components/H1"
+import { ThemeProvider } from "next-themes"
+import type { ReactNode } from "react"
 
 interface ProvidersProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-const components = {
+const _components = {
   h1: H1,
-};
+}
 
 export default function Providers({ children }: ProvidersProps) {
-  return (
-    <ThemeProvider>
-      <MDXProvider components={components}>{children}</MDXProvider>
-    </ThemeProvider>
-  );
+  return <ThemeProvider>{children}</ThemeProvider>
 }

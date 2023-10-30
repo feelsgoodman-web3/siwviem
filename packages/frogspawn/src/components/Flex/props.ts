@@ -1,8 +1,7 @@
-import type { PropDef } from "../../definitions/types";
-import { makeSafeList } from "../../utils";
+import type { PropDef } from "../../definitions/types"
 
-const direction = ["row", "row-reverse", "col", "col-reverse"] as const;
-const wrap = ["nowrap", "wrap", "wrap-reverse"] as const;
+export const direction = ["row", "row-reverse", "col", "col-reverse"] as const
+export const wrap = ["nowrap", "wrap", "wrap-reverse"] as const
 
 export const flexPropDefs = {
   direction: {
@@ -13,11 +12,6 @@ export const flexPropDefs = {
   },
   wrap: { type: "enum", values: wrap, default: undefined, responsive: true },
 } satisfies {
-  direction: PropDef<(typeof direction)[number]>;
-  wrap: PropDef<(typeof wrap)[number]>;
-};
-
-export const flexSafeList = [
-  makeSafeList("flex", wrap),
-  makeSafeList("flex", direction),
-];
+  direction: PropDef<typeof direction[number]>
+  wrap: PropDef<typeof wrap[number]>
+}

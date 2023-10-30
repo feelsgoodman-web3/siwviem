@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "feelsgoodman-web3/siwveim" }],
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "feelsgoodman-web3/siwveim" }
+  ],
   "commit": false,
   "access": "public",
   "baseBranch": "main",

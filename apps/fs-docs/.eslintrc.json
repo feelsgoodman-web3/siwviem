@@ -1,6 +1,4 @@
 {
   "root": true,
-  "extends": [
-    "@feelsgoodman/eslint-config-custom/next"
-  ]
+  "extends": ["@feelsgoodman/eslint-config-custom/next"]
 }

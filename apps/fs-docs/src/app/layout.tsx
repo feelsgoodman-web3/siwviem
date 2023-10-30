@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
-import { Flex, Box } from "@feelsgoodman/frogspawn/components";
+import { Flex } from "@feelsgoodman/fs-ui/components";
 import Providers from "@fs/app/providers";
 import { Header } from "@fs/common/components/Header";
 import { Metadata } from "next";
@@ -25,22 +25,12 @@ interface RootLayoutProps {
 }
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
           <Header />
           <Flex direction="col" asChild>
-            <main>
-              <Box
-                asChild
-                className="fs-max-w-[850px]"
-                py={20}
-                px={16}
-                mx="auto"
-              >
-                <section>{children}</section>
-              </Box>
-            </main>
+            <main>{children}</main>
           </Flex>
         </Providers>
       </body>

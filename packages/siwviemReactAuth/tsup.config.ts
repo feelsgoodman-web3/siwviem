@@ -1,6 +1,6 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from "tsup"
 
-import { dependencies, peerDependencies } from "./package.json";
+import { dependencies, peerDependencies } from "./package.json"
 
 export default defineConfig({
   banner: {
@@ -14,4 +14,4 @@ export default defineConfig({
   external: [...Object.keys(dependencies), ...Object.keys(peerDependencies)],
   dts: true,
   platform: "browser",
-});
+})

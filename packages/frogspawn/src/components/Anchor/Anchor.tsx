@@ -1,17 +1,17 @@
-import { type ElementRef, forwardRef } from "react";
-import { type TypographyProps } from "../../definitions";
-import type { PropsWithoutRefOrColor } from "../../definitions/types";
-import { Text } from "../Text";
-import { cva, VariantProps } from "class-variance-authority";
-import clsx from "clsx";
+import { VariantProps, cva } from "class-variance-authority"
+import clsx from "clsx"
+import { type ElementRef, forwardRef } from "react"
+import { type TypographyProps } from "../../definitions"
+import type { PropsWithoutRefOrColor } from "../../definitions/types"
+import { Text } from "../Text"
 
-type AnchorElement = ElementRef<"a">;
+type AnchorElement = ElementRef<"a">
 
 export interface AnchorProps
   extends TypographyProps,
     VariantProps<typeof anchorVariants>,
     PropsWithoutRefOrColor<"a"> {
-  asChild?: boolean;
+  asChild?: boolean
 }
 
 const anchorVariants = cva("", {
@@ -25,10 +25,10 @@ const anchorVariants = cva("", {
   defaultVariants: {
     underline: "hover",
   },
-});
+})
 
 const Anchor = forwardRef<AnchorElement, AnchorProps>((props, ref) => {
-  const { children, asChild, color = "accent", underline, ...rest } = props;
+  const { children, asChild, color = "accent", underline, ...rest } = props
 
   return (
     <Text
@@ -37,13 +37,13 @@ const Anchor = forwardRef<AnchorElement, AnchorProps>((props, ref) => {
       ref={ref}
       role="link"
       color={color}
-      className={clsx(anchorVariants({ underline }))}
+      className={clsx("fs-Anchor", anchorVariants({ underline }))}
     >
       {asChild ? children : <a>{children}</a>}
     </Text>
-  );
-});
+  )
+})
 
-Anchor.displayName = "Anchor";
+Anchor.displayName = "Anchor"
 
-export default Anchor;
+export default Anchor

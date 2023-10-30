@@ -1,8 +1,8 @@
-import { paddingDefs } from "./padding.props";
-import { GetPropDefTypes } from "./types";
-import { withBreakpoints } from "../utils";
+import { withBreakpoints } from "../utils"
+import { paddingDefs } from "./padding.props"
+import { GetPropDefTypes } from "./types"
 
-export type PaddingProps = GetPropDefTypes<typeof paddingDefs>;
+export type PaddingProps = GetPropDefTypes<typeof paddingDefs>
 
 export function extractPaddingProps<T extends PaddingProps>(props: T) {
   const {
@@ -16,7 +16,7 @@ export function extractPaddingProps<T extends PaddingProps>(props: T) {
     px = paddingDefs.px.default,
     py = paddingDefs.py.default,
     ...rest
-  } = props;
+  } = props
   return {
     paddingProps: {
       p,
@@ -30,7 +30,7 @@ export function extractPaddingProps<T extends PaddingProps>(props: T) {
       py,
     },
     ...rest,
-  };
+  }
 }
 
 export function withPaddingProps<T extends PaddingProps>(props: T) {
@@ -46,5 +46,5 @@ export function withPaddingProps<T extends PaddingProps>(props: T) {
     withBreakpoints("py", props.py),
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(" ")
 }

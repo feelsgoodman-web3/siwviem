@@ -1,16 +1,16 @@
-import { withBreakpoints } from "../utils";
+import { withBreakpoints } from "../utils"
 
-import { boxDefs } from "./box.props";
-import { type GetPropDefTypes } from "./types";
-import { extractPaddingProps, withPaddingProps } from "./padding.utils";
-import { extractMarginProps, withMarginProps } from "./margin.utils";
-import { extractPositionProps, withPositionProps } from "./position.utils";
+import { boxDefs } from "./box.props"
+import { extractMarginProps, withMarginProps } from "./margin.utils"
+import { extractPaddingProps, withPaddingProps } from "./padding.utils"
+import { extractPositionProps, withPositionProps } from "./position.utils"
+import { type GetPropDefTypes } from "./types"
 
-export type BoxProps = GetPropDefTypes<typeof boxDefs>;
+export type BoxProps = GetPropDefTypes<typeof boxDefs>
 export function extractBoxProps<T extends BoxProps>(props: T) {
-  const { paddingProps, ...paddingRest } = extractPaddingProps(props);
-  const { positionProps, ...positionRest } = extractPositionProps(paddingRest);
-  const { marginProps, ...marginRest } = extractMarginProps(positionRest);
+  const { paddingProps, ...paddingRest } = extractPaddingProps(props)
+  const { positionProps, ...positionRest } = extractPositionProps(paddingRest)
+  const { marginProps, ...marginRest } = extractMarginProps(positionRest)
   const {
     alignSelf = boxDefs.alignSelf.default,
     content = boxDefs.content.default,
@@ -26,7 +26,7 @@ export function extractBoxProps<T extends BoxProps>(props: T) {
     spaceX = boxDefs.spaceX.default,
     spaceY = boxDefs.spaceY.default,
     ...rest
-  } = marginRest;
+  } = marginRest
   return {
     layoutProps: {
       ...paddingProps,
@@ -47,7 +47,7 @@ export function extractBoxProps<T extends BoxProps>(props: T) {
       spaceY,
     },
     ...rest,
-  };
+  }
 }
 export function withBoxProps<T extends BoxProps>(props: T): string {
   return [
@@ -69,5 +69,5 @@ export function withBoxProps<T extends BoxProps>(props: T): string {
     withBreakpoints("space-y", props.spaceY),
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(" ")
 }

@@ -1,9 +1,9 @@
-import { withBreakpoints } from "../utils";
+import { withBreakpoints } from "../utils"
 
-import { marginDefs } from "./margin.props";
-import { GetPropDefTypes } from "./types";
+import { marginDefs } from "./margin.props"
+import { GetPropDefTypes } from "./types"
 
-export type MarginProps = GetPropDefTypes<typeof marginDefs>;
+export type MarginProps = GetPropDefTypes<typeof marginDefs>
 
 export function extractMarginProps<T extends MarginProps>(props: T) {
   const {
@@ -17,7 +17,7 @@ export function extractMarginProps<T extends MarginProps>(props: T) {
     mx = marginDefs.mx.default,
     my = marginDefs.my.default,
     ...rest
-  } = props;
+  } = props
   return {
     marginProps: {
       m,
@@ -31,7 +31,7 @@ export function extractMarginProps<T extends MarginProps>(props: T) {
       my,
     },
     ...rest,
-  };
+  }
 }
 
 export function withMarginProps<T extends MarginProps>(props: T) {
@@ -47,5 +47,5 @@ export function withMarginProps<T extends MarginProps>(props: T) {
     withBreakpoints("my", props.my),
   ]
     .filter(Boolean)
-    .join(" ");
+    .join(" ")
 }

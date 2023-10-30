@@ -1,8 +1,17 @@
 {
-  "extends": "@feelsgoodman/typescript-config/react-library.json",
+  "extends": ["@tsconfig/strictest/tsconfig"],
+  "include": ["src", "./package.json", "*.config.ts"],
+  "exclude": ["node_modules", "dist", ".turbo"],
   "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "exclude": ["node_modules"],
-  "include": ["src", "./package.json", "*.config.ts"]
+    "outDir": "./dist",
+    "jsx": "react-jsx",
+    "lib": ["ESNext", "DOM"],
+    "module": "ES2020",
+    "moduleResolution": "Bundler",
+    "target": "ESNext",
+    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+    "exactOptionalPropertyTypes": false
+  }
 }

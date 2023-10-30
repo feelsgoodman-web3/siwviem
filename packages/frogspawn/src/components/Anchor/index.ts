@@ -1,1 +1,1 @@
-export { default as Anchor, type AnchorProps } from "./Anchor";
+export { default as Anchor, type AnchorProps } from "./Anchor"

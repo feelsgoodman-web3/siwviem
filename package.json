@@ -5,13 +5,17 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "turbo run lint && pnpm biome",
     "test": "turbo run test",
     "anvil": "source .env && anvil --fork-url $ANVIL_FORK_URL --chain-id $ANVIL_CHAIN_ID --fork-block-number $ANVIL_BLOCK_NUMBER",
     "deploy:anvil": "turbo run deploy:anvil",
-    "lint:fix": "turbo run lint:fix",
+    "lint:fix": "turbo run lint:fix && pnpm biome:fix",
     "clean": "turbo run clean && rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "biome format . --write",
+    "biome": "biome check .",
+    "sort": "sort-package-json 'package.json' 'apps/*/package.json' 'packages/*/package.json'",
+    "sort-check": "sort-package-json 'package.json' 'apps/*/package.json' 'packages/*/package.json' --check",
+    "biome:fix": "pnpm biome --apply",
     "changeset": "changeset",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only"
@@ -22,8 +26,9 @@
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "2.25.2",
     "turbo": "latest",
+    "sort-package-json": "2.6.0",
     "typescript": "^5.1.6",
-    "eslint": "8.43.0"
+    "@biomejs/biome": "1.2.2"
   },
   "packageManager": "pnpm@8.6.11"
 }

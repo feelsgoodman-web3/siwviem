@@ -1,0 +1,61 @@
+export const metadata = {
+  title: "Getting started | Feels good man",
+};
+
+# Getting Started
+
+<Description>Install Frogspawn and build feeling good.</Description>
+
+## Installation
+
+### 1. Install Frogspawn
+
+Install the package from your command line.
+
+```shell
+pnpm install @feelsgoodman/fs-ui
+```
+
+### 2.A. Import default theme
+
+Import the global CSS file at the root of your application.
+
+```js
+import "@feelsgoodman/fs-ui/styles"
+```
+
+### 2.B. Configure tailwind to use frogspawn plugin
+
+Add the plugin to tailwind config.
+
+```ts
+import type { Config } from "tailwindcss";
+import { plugin } from "@feelsgoodman/fs-ui/plugin";
+
+const config: Config = {
+  /// ...config
+  plugins: [plugin],
+};
+export default config;
+```
+
+### 3. Start building
+Frogspawn is now ready, get building!
+
+```tsx
+import { Button, Flex, Text } from '@feelsgoodman/fs-ui/components';
+
+export default function App() {
+  return (
+    <Flex direction="column" gap="2">
+      <Text>We out here building with Frogspawn!</Text>
+      <Button>LFG</Button>
+    </Flex>
+  );
+}
+
+```
+
+## Feel more good man!
+
+Use Frogspawn to its full potential by exploring more concepts and features.

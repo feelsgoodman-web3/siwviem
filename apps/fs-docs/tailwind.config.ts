@@ -1,4 +1,5 @@
-import type { Config } from "tailwindcss";
+import { plugin } from "@feelsgoodman/fs-ui/plugin"
+import type { Config } from "tailwindcss"
 
 const config: Config = {
   content: [
@@ -6,8 +7,8 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/common/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@feelsgoodman/frogspawn/**/*.js",
+    "./node_modules/@feelsgoodman/fs-ui/dist/**/*.js",
   ],
-  plugins: [require("@feelsgoodman/frogspawn/plugin")],
-};
-export default config;
+  plugins: [plugin],
+}
+export default config

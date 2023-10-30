@@ -1,14 +1,13 @@
-import { SPACING_SCALE } from "../constants";
-import { makeSafeList } from "../utils";
+import { SPACING_SCALE } from "@feelsgoodman/fs-plugin"
 
-import { paddingDefs, PaddingDefs } from "./padding.props";
-import { marginDefs, MarginDefs } from "./margin.props";
-import { positionDefs, PositionDefs } from "./position.props";
-import { PropDef } from "./types";
+import { MarginDefs, marginDefs } from "./margin.props"
+import { PaddingDefs, paddingDefs } from "./padding.props"
+import { PositionDefs, positionDefs } from "./position.props"
+import { PropDef } from "./types"
 
-const alignSelf = ["auto", "center", "end", "start", "stretch"] as const;
+export const alignSelf = ["auto", "center", "end", "start", "stretch"] as const
 
-const content = [
+export const content = [
   "around",
   "baseline",
   "between",
@@ -18,11 +17,11 @@ const content = [
   "normal",
   "start",
   "stretch",
-] as const;
+] as const
 
-const items = ["center", "end", "normal", "start", "stretch"] as const;
+export const items = ["center", "end", "normal", "start", "stretch"] as const
 
-const justify = [
+export const justify = [
   "center",
   "end",
   "normal",
@@ -30,13 +29,13 @@ const justify = [
   "space-between",
   "space-evenly",
   "start",
-] as const;
+] as const
 
-const justifyItems = items; // They have the same values
+export const justifyItems = items // They have the same values
 
-const justifySelf = alignSelf; // They have the same values
+export const justifySelf = alignSelf // They have the same values
 
-const placeContent = [
+export const placeContent = [
   "around",
   "baseline",
   "between",
@@ -45,13 +44,13 @@ const placeContent = [
   "evenly",
   "start",
   "stretch",
-] as const;
+] as const
 
-const gap = SPACING_SCALE;
-const gapY = gap;
-const gapX = gap;
+export const gap = SPACING_SCALE
+export const gapY = gap
+export const gapX = gap
 
-const display = [
+export const display = [
   "block",
   "inline-block",
   "inline",
@@ -63,25 +62,25 @@ const display = [
   "table-row",
   "table-cell",
   "none",
-] as const;
+] as const
 
-const spaceX = [...SPACING_SCALE, "reverse"] as const;
-const spaceY = [...SPACING_SCALE, "reverse"] as const;
+export const spaceX = [...SPACING_SCALE, "reverse"] as const
+export const spaceY = [...SPACING_SCALE, "reverse"] as const
 
 export interface BoxDefs extends PaddingDefs, MarginDefs, PositionDefs {
-  alignSelf: PropDef<(typeof alignSelf)[number]>;
-  content: PropDef<(typeof content)[number]>;
-  display: PropDef<(typeof display)[number]>;
-  gap: PropDef<(typeof gap)[number]>;
-  gapX: PropDef<(typeof gapX)[number]>;
-  gapY: PropDef<(typeof gapY)[number]>;
-  items: PropDef<(typeof items)[number]>;
-  justify: PropDef<(typeof justify)[number]>;
-  justifyItems: PropDef<(typeof justifyItems)[number]>;
-  justifySelf: PropDef<(typeof justifySelf)[number]>;
-  spaceX: PropDef<(typeof spaceX)[number]>;
-  spaceY: PropDef<(typeof spaceY)[number]>;
-  placeContent: PropDef<(typeof placeContent)[number]>;
+  alignSelf: PropDef<typeof alignSelf[number]>
+  content: PropDef<typeof content[number]>
+  display: PropDef<typeof display[number]>
+  gap: PropDef<typeof gap[number]>
+  gapX: PropDef<typeof gapX[number]>
+  gapY: PropDef<typeof gapY[number]>
+  items: PropDef<typeof items[number]>
+  justify: PropDef<typeof justify[number]>
+  justifyItems: PropDef<typeof justifyItems[number]>
+  justifySelf: PropDef<typeof justifySelf[number]>
+  spaceX: PropDef<typeof spaceX[number]>
+  spaceY: PropDef<typeof spaceY[number]>
+  placeContent: PropDef<typeof placeContent[number]>
 }
 
 export const boxDefs: BoxDefs = {
@@ -146,20 +145,4 @@ export const boxDefs: BoxDefs = {
     default: undefined,
     responsive: true,
   },
-};
-
-export const boxSafeList = [
-  makeSafeList("self", alignSelf),
-  makeSafeList("content", content),
-  makeSafeList("", display),
-  makeSafeList("gap", gap),
-  makeSafeList("gap-x", gapX),
-  makeSafeList("gap-y", gapY),
-  makeSafeList("items", items),
-  makeSafeList("justify", justify),
-  makeSafeList("justify-items", justifyItems),
-  makeSafeList("justify-self", justifySelf),
-  makeSafeList("place-content", placeContent),
-  makeSafeList("space-x", spaceX),
-  makeSafeList("space-y", spaceY),
-];
+}

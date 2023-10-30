@@ -9,7 +9,7 @@ export const EIP1271_ABI = [
     name: "isValidSignature",
     outputs: [{ name: "magicValue", internalType: "bytes4", type: "bytes4" }],
   },
-];
+]
 
 export const SAFE_ABI = [
   {
@@ -37,4 +37,4 @@ export const SAFE_ABI = [
     name: "isValidSignature",
     outputs: [{ name: "magicValue", internalType: "bytes4", type: "bytes4" }],
   },
-];
+]
